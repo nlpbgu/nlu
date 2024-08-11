@@ -13,11 +13,11 @@ To run a portion of the pipeline, first clone this repository to your location.
 
 
 
-To extract the raw data , run:
+To Prepares SNLI and u-SNLI datasets (automatically downloads data) , run:
 
 
 ```python 
-python py_tapes/data.py --data dir_to_store_your_raw_data
+python py_tapes/data.py --root_dir your location to repository root dir
 ```
 
  
