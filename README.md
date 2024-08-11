@@ -14,7 +14,7 @@ of the experiment pipeline.
 
 To run a portion of the pipeline, first clone this repository to your location.
 To extract the raw data , run:
----python
+---python py_tapes/data.py --data dir_to_store_your_raw_data
 python 
 Then use the following command:
 
