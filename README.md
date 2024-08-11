@@ -42,7 +42,7 @@ python py_tapes/regression.py --root_dir --out_dir dir_store_the_learning_weight
 ```
 
 
-To trains the regression model under various conditions with the augmentation data , run:
+To trains the regression model with the augmentation data , run:
 
 
 ```python 
