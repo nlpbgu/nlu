@@ -11,7 +11,7 @@ This repository hosts the code for the following paper:
 
 In order to run the code, first clone this repository to your location.
 
-Arguments Dictionary:
+Arguments explanation:
 ```
 | root_dir - your location to  the root directory of the project repository                   |
 | out_dir - dir to store the learning weights after the training done                         |
@@ -20,8 +20,6 @@ Arguments Dictionary:
 | training_augmentation - after augmentation ,training the model with new augmentation data   | 
 
 ```
-
-
 
 To prepares SNLI and u-SNLI datasets (automatically downloads data) , run:
 
