@@ -20,25 +20,25 @@ To prepares SNLI and u-SNLI datasets (automatically downloads data) , run:
 python py_tapes/data.py --root_dir your location to repository root dir
 ```
 
-To trains the regression model under various conditions without augmentation , run:
+To trains baseline UNLI without augmentation , run:
 
 
 ```python 
 python py_tapes/regression.py --root_dir --out_dir dir_store_the_learning_weights
 ```
 
-To trains the regression model in order to augmentation with Comet augmentation , run:
+To augmentation UNLI with Comet model , run:
 
 
 ```python 
-python py_tapes/regression.py --root_dir --out_dir dir_store_the_learning_weights --augmentation comet
+python py_tapes/regression.py --root_dir --out_dir dir_store_the_learning_weights --augmentation comet --threshold 
 ```
 
-To trains the regression model in order to augmentation with baseline bart  , run:
+To augmentation UNLI with baseline bart  , run:
 
 
 ```python 
-python py_tapes/regression.py --root_dir --out_dir dir_store_the_learning_weights --augmentation bart
+python py_tapes/regression.py --root_dir --out_dir dir_store_the_learning_weights --augmentation bart --threshold
 ```
 
 
