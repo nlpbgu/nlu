@@ -9,6 +9,8 @@ import subprocess
 import urllib.request
 import zipfile
 import argparse
+# from py_tapes.assemble import
+
 
 # Define global variables
 snli_url = "https://nlp.stanford.edu/projects/snli/snli_1.0.zip"
@@ -16,9 +18,10 @@ usnli_url = "http://nlp.jhu.edu/unli/u-snli.zip"
 
 # root_dir = r"C:\Users\User\Desktop\MSc\NLU\unli"
 parser = argparse.ArgumentParser(description="")
-parser.add_argument("--data", type=str, default="", help="Path to directoryto store the data")
+parser.add_argument("--rootdir", type=str, default="", help="Path to root dir of your repository")
 ARGS = parser.parse_args()
-root_dir = ARGS.data # r"/sise/home/orisim/projects/UNLI/"
+root_dir = ARGS.rootdir # r"/sise/home/orisim/projects/UNLI/"
+os.environ['PYTHONPATH'] = root_dir
 
 
 # Task functions
@@ -98,3 +101,5 @@ snli_task("snli_dataset")
 usnli_csv_task("usnli_dataset")
 snli_qrels_task("snli_qrels")
 usnli_qrels_task("usnli_dataset", "usnli_qrels")
+
+subprocess.run(["python", os.path.join(root_dir, "py_tapes","assemble.py")])

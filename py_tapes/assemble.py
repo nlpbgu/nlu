@@ -1,11 +1,15 @@
 import os
 import subprocess
 import shutil
+import argparse
 
 # Define the global paths and URLs
-unli = r"/sise/home/orisim/projects/UNLI/"
-snli_qrels = unli+"snli_qrels"
-usnli_qrels = unli+"usnli_qrels"
+# unli = r"/sise/home/orisim/projects/UNLI/"
+
+
+unli = os.getenv('PYTHONPATH')
+snli_qrels = os.path.join(unli,"snli_qrels")
+usnli_qrels =os.path.join(unli,"usnli_qrels")
 aggregator = "mean"
 
 
@@ -79,8 +83,7 @@ def usnli_dataset(snli, usnli, out):
 
 # Execute the tasks
 
-# surrogate_scores(snli_qrels, usnli_qrels, aggregator, "surrogate.scores")
-
-# snli_with_surrogates_dataset(snli_qrels, usnli_qrels, "surrogate.scores", unli+"/surrogate_dataset")
+surrogate_scores(snli_qrels, usnli_qrels, aggregator, "surrogate.scores")
+snli_with_surrogates_dataset(snli_qrels, usnli_qrels, "surrogate.scores", unli+"/surrogate_dataset")
 snli_combined_with_usnli_dataset(snli_qrels, usnli_qrels, "surrogate.scores", unli+"/combined_dataset")
-# usnli_dataset(snli_qrels, usnli_qrels, os.path.join(unli, "usnli_dataset")) #  "path/to/output/uSnliDataset"
+usnli_dataset(snli_qrels, usnli_qrels, os.path.join(unli, "usnli_dataset"))
