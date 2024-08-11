@@ -50,7 +50,9 @@ def plan_regression():
 
     ARGS = parser.parse_args()
     unli_dir = os.getenv('PYTHONPATH') or ARGS.rootdir
+    unli_dir = r"/sise/home/orisim/projects/UNLI/"
     out_dir = ARGS.outdir
+    out_dir = unli_dir
     threshold = ARGS.threshold
     augmentation  , training = ARGS.augmentation, ARGS.training_augmentation
     gpu_id = None
