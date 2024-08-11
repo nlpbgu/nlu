@@ -9,7 +9,16 @@ This repository hosts the code for the following paper:
 
 ### Running
 
-To run a portion of the pipeline, first clone this repository to your location.
+In order to run the code, first clone this repository to your location.
+
+Arguments explanation:
+```
+| root_dir - your location to  the root directory of the project repository                   |
+| out_dir - dir to store the learning weights after the training done                         |
+| augmentation - model to augmentation the unli data                                          | 
+| threshold - the threshold of the residual you decide to robust the unli                     | 
+| training_augmentation - after augmentation ,training the model with new augmentation data   | 
+```
 
 
 
@@ -17,28 +26,28 @@ To prepares SNLI and u-SNLI datasets (automatically downloads data) , run:
 
 
 ```python 
-python py_tapes/data.py --root_dir your location to repository root dir
+python py_tapes/data.py --root_dir
 ```
 
 To trains baseline UNLI without augmentation , run:
 
 
 ```python 
-python py_tapes/regression.py --root_dir --out_dir dir_store_the_learning_weights
+python py_tapes/regression.py --root_dir --out_dir 
 ```
 
 To augmentation UNLI with Comet model , run:
 
 
 ```python 
-python py_tapes/regression.py --root_dir --out_dir dir_store_the_learning_weights --augmentation comet --threshold 
+python py_tapes/regression.py --root_dir --out_dir --augmentation comet --threshold 
 ```
 
 To augmentation UNLI with baseline bart  , run:
 
 
 ```python 
-python py_tapes/regression.py --root_dir --out_dir dir_store_the_learning_weights --augmentation bart --threshold
+python py_tapes/regression.py --root_dir --out_dir --augmentation bart --threshold
 ```
 
 
@@ -46,7 +55,7 @@ To trains the regression model with the augmentation data , run:
 
 
 ```python 
-python py_tapes/regression.py --root_dir --out_dir dir_store_the_learning_weights --training_augmentation
+python py_tapes/regression.py --root_dir --out_dir --training_augmentation
 ```
 
 
