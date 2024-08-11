@@ -74,7 +74,7 @@ def process_sentences(list_of_lists, filter_words=('Generate', 'Explain'), speci
                 for i, (sentence, tokens) in enumerate(tokenized_sentences):
 
                         # Filter based on starting words, specific sentences, and minimum word count
-                        if (any( word.lower() == tokens[0] for word in filter_words) or
+                        if ( len(tokens) == 0 or any( word.lower() == tokens[0] for word in filter_words) or
                                 len(tokens) < min_words or
                                 sentence in [specific_sentences_to_remove[inx]]):
                                 continue
@@ -108,7 +108,7 @@ class BartAugmentation(Augmentation):
 
         def augmentation_commonsense_data(self, queries):
                 queries_mod = []
-                # print("queries: ","size: ",len(queries),"\n",queries)
+                print("queries: ","size: ",len(queries),"\n",queries)
 
                 for query in queries:
                         # print(query)
@@ -120,14 +120,22 @@ class BartAugmentation(Augmentation):
                 results = self.augmet_model.generate(queries_mod, decode_method="beam", num_generate=5)
                 # print("results before is size",len(results))
 
-                results_bart =[]
-                for result in results:
-                        for r in result:
-                                results_bart.append(self.extract_after_second_hypothesis(r))
 
-                results = process_sentences(results_bart, specific_sentences_to_remove=queries)
+                results_bart_f =[]
+                for result in results:
+
+                        results_bart = []
+                        for r in result:
+                                r = self.extract_after_second_hypothesis(r)
+                                if r:
+                                        results_bart.append(r)
+
+                        results_bart_f.append(results_bart)
+
+                # print(results_bart_f)
+                results = process_sentences(results_bart_f, specific_sentences_to_remove=queries)
                 print("results after is size",len(results))
-                print("results after",results)
+                print("results after","\n",results)
 
                 return results
 
@@ -135,5 +143,7 @@ class BartAugmentation(Augmentation):
                 # Split the sentence by "Hypothesis:" and take everything after the second occurrence
                 parts = result.split("hypothesis")
                 if len(parts) > 1:
-                        return parts[1].strip()[1:]
+                        if len(parts[1].strip()) > 1:
+                                return parts[1].strip()[1:]
+                        return None
                 return None  # Return None if there aren't two occurrences
