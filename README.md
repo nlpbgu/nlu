@@ -13,36 +13,41 @@ To run a portion of the pipeline, first clone this repository to your location.
 
 
 
-To Prepares SNLI and u-SNLI datasets (automatically downloads data) , run:
+To prepares SNLI and u-SNLI datasets (automatically downloads data) , run:
 
 
 ```python 
 python py_tapes/data.py --root_dir your location to repository root dir
 ```
 
- 
-Then use the following command:
+To trains the regression model under various conditions without augmentation , run:
 
-  ```bash
-    ducttape unli.tape -p <TASK>
-  ```
-  where `<TASK>` is any of the following:
-  
-| Task         | Description                                                      |
-|--------------|------------------------------------------------------------------|
-| `Data`       | Prepares SNLI and u-SNLI datasets (automatically downloads data) |
-| `HypOnly`    | Generates datasets for hypothesis-only baselines                 |
-| `Regression` | Trains the regression model under various conditions             |
 
-One can easily execute different tasks by modifying the plans in the tape files.
-
-### Citation
-Please cite this paper and package as
-```bibtex
-@inproceedings{UNLI-ACL20,
-    author = {Tongfei Chen and Zhengping Jiang and Adam Poliak and Keisuke Sakaguchi and Benjamin {Van Durme}},
-    title = {Uncertain natural language inference},
-    booktitle = {Proceedings of ACL},
-    year = {2020}
-}
+```python 
+python py_tapes/regression.py --root_dir --out_dir dir_store_the_learning_weights
 ```
+
+To trains the regression model in order to augmentation with Comet augmentation , run:
+
+
+```python 
+python py_tapes/regression.py --root_dir --out_dir dir_store_the_learning_weights --augmentation comet
+```
+
+To trains the regression model in order to augmentation with baseline bart  , run:
+
+
+```python 
+python py_tapes/regression.py --root_dir --out_dir dir_store_the_learning_weights --augmentation bart
+```
+
+
+To trains the regression model under various conditions with the augmentation data , run:
+
+
+```python 
+python py_tapes/regression.py --root_dir --out_dir dir_store_the_learning_weights --training_augmentation
+```
+
+
+
