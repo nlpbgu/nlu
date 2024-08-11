@@ -1,4 +1,4 @@
-## Uncertain Natural Language Inference
+## UNLI Commonsense Reasoning Augmentation ACL 2024
 
 This repository hosts the code for the following paper:
  * Tongfei Chen*, Zhengping Jiang*, Adam Poliak, Keisuke Sakaguchi, Benjamin Van Durme (2020): 
@@ -9,34 +9,45 @@ This repository hosts the code for the following paper:
 
 ### Running
 
-This repository uses [Ducttape](https://github.com/jhclark/ducttape) to manage intermediate results 
-of the experiment pipeline.
+To run a portion of the pipeline, first clone this repository to your location.
 
-To run a portion of the pipeline, first clone this repository to your location, then in `unli.tape`,
-modify `package unli .path` variable to where your location of this repository is.
 
-Then use the following command:
 
-  ```bash
-    ducttape unli.tape -p <TASK>
-  ```
-  where `<TASK>` is any of the following:
-  
-| Task         | Description                                                      |
-|--------------|------------------------------------------------------------------|
-| `Data`       | Prepares SNLI and u-SNLI datasets (automatically downloads data) |
-| `HypOnly`    | Generates datasets for hypothesis-only baselines                 |
-| `Regression` | Trains the regression model under various conditions             |
+To prepares SNLI and u-SNLI datasets (automatically downloads data) , run:
 
-One can easily execute different tasks by modifying the plans in the tape files.
 
-### Citation
-Please cite this paper and package as
-```bibtex
-@inproceedings{UNLI-ACL20,
-    author = {Tongfei Chen and Zhengping Jiang and Adam Poliak and Keisuke Sakaguchi and Benjamin {Van Durme}},
-    title = {Uncertain natural language inference},
-    booktitle = {Proceedings of ACL},
-    year = {2020}
-}
+```python 
+python py_tapes/data.py --root_dir your location to repository root dir
 ```
+
+To trains the regression model under various conditions without augmentation , run:
+
+
+```python 
+python py_tapes/regression.py --root_dir --out_dir dir_store_the_learning_weights
+```
+
+To trains the regression model in order to augmentation with Comet augmentation , run:
+
+
+```python 
+python py_tapes/regression.py --root_dir --out_dir dir_store_the_learning_weights --augmentation comet
+```
+
+To trains the regression model in order to augmentation with baseline bart  , run:
+
+
+```python 
+python py_tapes/regression.py --root_dir --out_dir dir_store_the_learning_weights --augmentation bart
+```
+
+
+To trains the regression model with the augmentation data , run:
+
+
+```python 
+python py_tapes/regression.py --root_dir --out_dir dir_store_the_learning_weights --training_augmentation
+```
+
+
+
