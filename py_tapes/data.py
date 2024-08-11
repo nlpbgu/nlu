@@ -8,14 +8,18 @@ import shutil
 import subprocess
 import urllib.request
 import zipfile
-
+import argparse
 
 # Define global variables
 snli_url = "https://nlp.stanford.edu/projects/snli/snli_1.0.zip"
 usnli_url = "http://nlp.jhu.edu/unli/u-snli.zip"
 
 # root_dir = r"C:\Users\User\Desktop\MSc\NLU\unli"
-root_dir = r"/sise/home/orisim/projects/UNLI/"
+parser = argparse.ArgumentParser(description="")
+parser.add_argument("--data", type=str, default="", help="Path to directoryto store the data")
+ARGS = parser.parse_args()
+root_dir = ARGS.data # r"/sise/home/orisim/projects/UNLI/"
+
 
 # Task functions
 def download_and_extract(url, output_dir):
