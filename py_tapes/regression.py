@@ -3,7 +3,7 @@ import shutil
 import subprocess
 import argparse
 
-def regression_task(out_dir, unli_dir, dataset, gpu_id,augmentation,training):
+def regression_task(out_dir,unli_dir,dataset,gpu_id,augmentation,training,threshold):
 
     os.makedirs(out_dir, exist_ok=True)
     
@@ -20,6 +20,8 @@ def regression_task(out_dir, unli_dir, dataset, gpu_id,augmentation,training):
 
     if augmentation :
         command.extend(['--augmentation', augmentation])
+        if threshold :
+            command.extend(['--threshold', threshold])
 
     if training and augmentation is None:
         command.extend(['--training_augmentation'])
@@ -44,11 +46,12 @@ def plan_regression():
     parser.add_argument("--outdir", type=str, default="", help="Output path to store the weights")
     parser.add_argument("--augmentation", type=str, help="Enable augmentation")  # action='store_true'
     parser.add_argument("--training_augmentation", action='store_true', help="trainig the augmentation you created")
+    parser.add_argument("--threshold",  help="threshold to be reference" , default="0.8")
 
     ARGS = parser.parse_args()
     unli_dir = os.getenv('PYTHONPATH') or ARGS.rootdir
     out_dir = ARGS.outdir
-
+    threshold = ARGS.threshold
     augmentation  , training = ARGS.augmentation, ARGS.training_augmentation
     gpu_id = None
 
@@ -63,7 +66,7 @@ def plan_regression():
     
     for scenario, dataset_path in dataset.items():
         scenario_out_dir = os.path.join(out_dir  ,"comet" , scenario)
-        regression_task(scenario_out_dir, unli_dir, dataset_path, gpu_id,augmentation,training )
+        regression_task(scenario_out_dir, unli_dir, dataset_path , gpu_id, augmentation , training , threshold )
 
 
 

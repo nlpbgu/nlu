@@ -14,22 +14,14 @@ class Augmentation():
                 self.augmet_model.model.zero_grad()
                 print("model loaded")
 
-                # self.kv_store =  KeyValueStore.open()
-                # self.data_dir_l = os.path.join(data_dir,"train.l")
-                # self.data_dir_r = os.path.join(data_dir,"train.r")
-                # self.kv_store.store_in_redis(self.data_dir_l)
-                # self.kv_store.store_in_redis(self.data_dir_r)
-
 
         def augmentation_commonsense_data(self, queries):
 
-                # Retrieve a value by key
                 # print(f"all keys - {self.kv_store.get_all_keys()}")
                 queries_mod = []
                 # print("queries: ","size: ",len(queries),"\n",queries)
 
                 for query in queries:
-                        # print(query)
                         query = f"Premise: {query['l']} Hypothesis: {query['r']} Paraphrase a Commonsense Hypothesis:"
                         queries_mod.append(query)
 
@@ -108,7 +100,6 @@ class BartAugmentation(Augmentation):
 
         def augmentation_commonsense_data(self, queries):
                 queries_mod = []
-                print("queries: ","size: ",len(queries),"\n",queries)
 
                 for query in queries:
                         # print(query)
@@ -132,10 +123,8 @@ class BartAugmentation(Augmentation):
 
                         results_bart_f.append(results_bart)
 
-                # print(results_bart_f)
                 results = process_sentences(results_bart_f, specific_sentences_to_remove=queries)
-                print("results after is size",len(results))
-                print("results after","\n",results)
+
 
                 return results
 

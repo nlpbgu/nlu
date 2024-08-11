@@ -29,6 +29,8 @@ parser.add_argument("--batch_size", type=int, default=16, help="")
 parser.add_argument("--gpuid", type=int, default=0)
 parser.add_argument("--augmentation", type = str , help="Enable augmentation") # action='store_true'
 parser.add_argument("--training_augmentation", action='store_true', help="trainig the augmentation you created")
+parser.add_argument("--threshold", action='float', help="threshold we want to reference")
+
 
 ARGS = parser.parse_args()
 
@@ -77,6 +79,7 @@ model: torch.nn.Module = SentencePairModel(
     augmentation = augm_mode ,  # Augmentation(model_path) if ARGS.augmentation else None
     kv_store = kv_store if ARGS.augmentation else None,
     data_dir = ARGS.data ,
+    threshold = ARGS.threshold
 )
 model.cuda()
 

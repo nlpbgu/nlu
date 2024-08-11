@@ -37,7 +37,8 @@ class SentencePairModel(Model):
                  reverse_vocab = None,
                  augmentation : Augmentation = None,
                  kv_store: KeyValueStore = None,
-                 data_dir: str = None
+                 data_dir: str = None,
+                 threshold: float = 0.8
                  ):
 
         super(SentencePairModel, self).__init__(vocab=None)
@@ -61,8 +62,7 @@ class SentencePairModel(Model):
         self.results_predictions_train = []
         self.epoch = 0
         self.flag = True
-        self.threshold = 0.8
-        # self.dir_output_comet = ""
+        self.threshold = threshold
         self.reverse_vocab = reverse_vocab,
         self.augmentation = augmentation
         self.ds_store = kv_store,
