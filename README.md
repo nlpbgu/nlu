@@ -9,10 +9,8 @@ This repository hosts the code for the following paper:
 
 ### Running
 
-This repository uses [Ducttape](https://github.com/jhclark/ducttape) to manage intermediate results 
-of the experiment pipeline.
-
 To run a portion of the pipeline, first clone this repository to your location.
+
 
 
 To extract the raw data , run:
