@@ -49,8 +49,9 @@ def plan_regression():
     parser.add_argument("--threshold",  help="threshold to be reference" , default="0.8")
 
     ARGS = parser.parse_args()
+    print(os.getenv('PYTHONPATH'))
     unli_dir = os.getenv('PYTHONPATH') or ARGS.rootdir
-    unli_dir = r"/sise/home/orisim/projects/UNLI/"
+    # unli_dir = r"/sise/home/orisim/projects/UNLI/"
     out_dir = ARGS.outdir
     out_dir = unli_dir
     threshold = ARGS.threshold
