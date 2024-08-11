@@ -309,6 +309,7 @@ class QRelsRandomSampleListwiseReader(QRelsReader):
             t, w = l.strip('\n').split("\t")
             self.idf[t] = float(w)
 
+        print(f"corpus: {corpus}")
         self.corpus = StringStringStorage.open(corpus)
 
         self.num_neg_samples = num_neg_samples

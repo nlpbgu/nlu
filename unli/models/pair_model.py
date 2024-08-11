@@ -19,6 +19,9 @@ import unli.modules.loss.hinge
 import unli.modules.loss.hinge_ranking
 from unli.utils.trec_eval import *
 import scipy.stats
+from unli.utils.augmentation_commonsense import Augmentation
+from unli.data.storage import KeyValueStore
+from scripts.util import *
 
 
 class SentencePairModel(Model):
@@ -30,7 +33,11 @@ class SentencePairModel(Model):
                  mode: str,
                  num_r1_candidates: int = 2,
                  num_r0_candidates: int = 10,
-                 mode_weights={}
+                 mode_weights={},
+                 reverse_vocab = None,
+                 augmentation : Augmentation = None,
+                 kv_store: KeyValueStore = None,
+                 data_dir: str = None
                  ):
 
         super(SentencePairModel, self).__init__(vocab=None)
@@ -50,9 +57,24 @@ class SentencePairModel(Model):
         self.last_qrels_filename: str = None
         self.last_qres_filename: str = None
 
+        self.results_predictions_dev = []
+        self.results_predictions_train = []
+        self.epoch = 0
+        self.flag = True
+        self.threshold = 0.8
+        # self.dir_output_comet = ""
+        self.reverse_vocab = reverse_vocab,
+        self.augmentation = augmentation
+        self.ds_store = kv_store,
+        self.data_dir = data_dir
+        if self.ds_store[0] :
+            self.new_key_r = self.ds_store[0]._get_highest_suffix(os.path.join(self.data_dir, "train.r"))
+        # print(self.new_key_l,"  ", self.new_key_r)
+        # print(self.ds_store[0].get_all_keys())
     @classmethod
     def from_params(cls, vocab, params):
 
+        print("from_params of SentencePairModel been called")
         extractor: SentencePairFeatureExtractor = {
             "coupled": lambda: CoupledSentencePairFeatureExtractor.from_params(vocab, params["extractor"]),
             "decoupled": lambda: DecoupledSentencePairFeatureExtractor.from_params(vocab, params["extractor"])
@@ -170,6 +192,9 @@ class SentencePairModel(Model):
         loss: torch.Tensor = None
         pred_dict: Dict[str, torch.Tensor] = None
 
+        # print(f"mode: {mode}") # to remove ori
+        # print( f"self.training: {self.training}")
+
         if mode.startswith("pointwise"):
             lid: List[str] = source["lid"]
             l: torch.Tensor = source["l"][self.extractor.l_token_index_field]  # F[Batch, Word, ?Char]
@@ -178,15 +203,87 @@ class SentencePairModel(Model):
             y: torch.Tensor = source["y"]
             y_pred = self.compute_scores_pointwise(l, r)
             pred_dict = {"y_pred": y_pred}
+
             if self.training:
+
                 loss = self.loss_func(y_pred, y) * weight
                 self.loss_value = loss.item()
+
+                self.flag = True
+                queries = []
+                new_qrels_data = []
+
+                if self.epoch == 2 and self.augmentation:
+
+                    for i in range(0, len(lid)):
+
+                            # input = {
+                            #     "epoch": self.epoch ,
+                            #     "premises": lid[i],
+                            #     "hypothesis": rid[i],
+                            #     "y_unli": y[i].item(),
+                            #     "y_predicted_unli": y_pred[i].item()
+                            # }
+                            # self.results_predictions_train.append(input)
+                            # print(f"self.reverse_vocab: {self.reverse_vocab}")
+                            # print(f"reverse_vocab.get_index_to_token_vocabulary():")
+                            # print(self.reverse_vocab.get_index_to_token_vocabulary(namespace="tags"))
+                            # print(f"reverse_vocab.get_vocab_size():" )
+                            # print(self.reverse_vocab.get_vocab_size(namespace="tags"))
+                            # decoded_tokens = [self.reverse_vocab[id].replace("#", "") for id in l[i].cpu().numpy() if id not in [101,102,]]
+                            # decoded_sentence = " ".join(decoded_tokens)
+                            # print(decoded_sentence)
+                            # input["p_text"] =
+
+                            if abs(y[i].item() - y_pred[i].item()) > self.threshold and (  y[i].item() >= 0.84):  # y[i].item() <=0.15 or
+
+                                key_l = lid[i]
+                                key_r = rid[i]
+                                value_r = self.ds_store[0].get_value(os.path.join(self.data_dir,"train.r"),key_r)
+                                value_l = self.ds_store[0].get_value(os.path.join(self.data_dir,"train.l"),key_l)
+                                queries.append({"l": value_l, "r":value_r, "y":y[i].item() , "key_l": key_l })
+
+                    if len(queries) > 0:
+
+                        augmn_data = self.augmentation.augmentation_commonsense_data(queries)
+                        # print("augmn_data is soze" , len(augmn_data))
+                        for i,row in enumerate(augmn_data):
+
+                            if len(row) > 0:
+
+                                for  r in row:
+
+                                    # self.new_key_l = lid[i] # self.ds_store[0].get_the_next_id(self.new_key_l,'l') #.add_new_entry(os.path.join(self.data_dir,"train.l"), queries[i]["l"])
+                                    self.new_key_r = self.ds_store[0].get_the_next_id(self.new_key_r,'r') #.add_new_entry(os.path.join(self.data_dir,"train.r"), r)
+                                    new_qrels_data.append({"key_l": queries[i]["key_l"] ,"new_key_r" : self.new_key_r, "y": queries[i]["y"] , "new_r": r })
+
+                    if len(new_qrels_data) > 0:
+                        add_row_to_qrels(os.path.join(self.data_dir,'augmentation','train.qrels')  , new_qrels_data )
+                        # add_row_to_l(os.path.join(self.data_dir,'augmentation','train.l'), new_qrels_data)
+                        add_row_to_r(os.path.join(self.data_dir,'augmentation','train.r'), new_qrels_data)
+
                 return {"loss": loss, **pred_dict}
+
             else:  # dev
+
+                print(f"epoch: {self.epoch}")
                 for i in range(0, len(lid)):
                     if mode == "pointwise-regression":
                         print(TrecEvalRefItem(lid[i], rid[i], y[i].item()), file=self.qrels)
                         print(TrecEvalResItem(lid[i], rid[i], 0, y_pred[i].item()), file=self.qres)
+
+                        if self.flag:
+                            self.epoch +=1
+                            self.flag = False
+
+                        self.results_predictions_dev.append({
+                                    "epoch": self.epoch-1,
+                                    "premises": lid[i],
+                                    "hypothesis": rid[i],
+                                    "y_unli": y[i].item(),
+                                    "y_predicted_unli": y_pred[i].item()
+                                })
+
                     elif mode == "pointwise-classification":
                         y_pred_cls = y_pred.argmax(dim=1)
                         print(TrecEvalRefItem(lid[i], rid[i], y[i].item()), file=self.qrels)
@@ -279,6 +376,9 @@ class SentencePairModel(Model):
         pass
 
     def dev_callback(self, epoch: int, serialization_dir: str):
+        print(f"Epoch: {epoch}")
+        print(f"serialization_dir/epoch-{epoch}-dev.qrels:  {serialization_dir}/epoch-{epoch}-dev.qrels")
+        self.epoch = epoch
         shutil.copyfile(self.last_qrels_filename, f"{serialization_dir}/epoch-{epoch}-dev.qrels")
         shutil.copyfile(self.last_qres_filename, f"{serialization_dir}/epoch-{epoch}-dev.qres")
 
@@ -292,6 +392,7 @@ class SentencePairModel(Model):
         if self.training:
             return loss_dict
 
+        print(self.test_mode) # to remove ori
         if reset:
             self.qrels.flush()
             self.qres.flush()
@@ -320,6 +421,10 @@ class SentencePairModel(Model):
                 self.qres.close()
                 ys = []
                 ys_pred = []
+
+                print(f"self.qrels.name {self.qrels.name}")
+                print(f"self.qres.name {self.qres.name}")
+
                 with open(self.qrels.name, mode='r') as qrels_f, open(self.qres.name, mode='r') as qres_f:
                     for l in qrels_f:
                         _, _, _, y = l.strip().split('\t')

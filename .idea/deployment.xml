@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" autoUpload="Always" serverName="orisim@132.72.67.226:22 password (2)" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="orisim@132.72.64.130:22 password">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.64.33:22 password">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.64.33:22 password (2)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.64.33:22 password (3)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.65.162:22 password">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.65.171:22 password">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.65.182:22 password">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.65.224:22 password">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.65.247:22 password">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.66.116:22 password">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.66.146:22 password">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.66.146:22 password (2)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.66.154:22 password">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.66.154:22 password (2)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.66.154:22 password (3)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.66.164:22 password">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/.virtualenvs/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.66.164:22 password (2)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.66.164:22 password (3)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.66.180:22 password">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.66.187:22 password">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.66.197:22 password">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.66.64:22 password">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.66.73:22 password">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.67.185:22 password">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.67.185:22 password (2)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.67.185:22 password (3)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.67.187:22 password">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.67.187:22 password (2)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.67.187:22 password (3)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.67.212:22 password">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.67.212:22 password (2)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.67.213:22 password">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.67.217:22 password">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.67.217:22 password (2)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.67.225:22 password">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.67.226:22 password">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.67.226:22 password (2)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.67.227:22 password">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.67.232:22 password">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.67.232:22 password (2)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.67.232:22 password (3)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.67.232:22 password (4)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.67.234:22 password">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.67.234:22 password (2)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
+  </component>
+</project>

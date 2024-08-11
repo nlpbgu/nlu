@@ -3,6 +3,8 @@ import torch
 import numpy as np
 import transformers
 from allennlp.modules.seq2vec_encoders import Seq2VecEncoder
+from torch import nn
+from huggingface_hub import PyTorchModelHubMixin
 
 
 class BertSeq2VecEncoderForPairs(transformers.BertPreTrainedModel, Seq2VecEncoder):
@@ -30,3 +32,47 @@ class BertSeq2VecEncoderForPairs(transformers.BertPreTrainedModel, Seq2VecEncode
 
     def get_output_dim(self) -> int:
         pass
+
+
+class BartSeq2VecEncoderForPairs(transformers.PreTrainedModel, Seq2VecEncoder):
+
+    config_class = transformers.BartConfig
+
+    def __init__(self, config: transformers.BartConfig = None , model_path: str = None):
+        super(BartSeq2VecEncoderForPairs, self).__init__(config)
+        self.bart = transformers.BartForConditionalGeneration(config)
+        self.dropout = torch.nn.Dropout(0.1)
+
+    @classmethod
+    def from_params(cls, params):
+        print(f"from params: {params}")
+        return cls.from_pretrained(params["pretrained_bart_model_name"])
+
+    def forward(self, stm: Tuple[torch.Tensor, torch.Tensor, torch.Tensor]):
+
+
+        s, t, m = stm
+        print(f"s size is {s.size()}")
+        print(f"s first {s[0]}")
+
+        outputs = self.bart(
+            input_ids=s,
+            attention_mask=m
+        )
+        print(f"outputs first is {outputs[0][0]}")
+        print(f"outputs first size is {outputs[0][1].size()}")
+        print(f"outputs size is {outputs[0].size()}")
+        pooled = outputs[0].mean(dim=1)  # Take the representation of the first token ([CLS] equivalent)
+        print(f"pooled mean(dim=0) size is {outputs[0].mean(dim=0).size()}")
+        print(f"pooled mean(dim=1) size is {outputs[0].mean(dim=1).size()}")
+        print(f"pooled mean(dim=2) size is {outputs[0].mean(dim=2).size()}")
+
+        return self.dropout(pooled)
+
+    def get_input_dim(self) -> int:
+        pass
+        # return self.bart.config.d_model
+
+    def get_output_dim(self) -> int:
+        pass
+        # return self.bart.config.d_model

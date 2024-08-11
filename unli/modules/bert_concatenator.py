@@ -19,6 +19,8 @@ class BERTConcatenator(Joiner):
         :param r: LongTensor[Batch, WordPiece]
         :return: input_ids, token_type_ids, attention_mask
         """
+
+
         batch_size = l.size(0)
 
         r = r[:, 1:]  # remove [CLS] prefixing R

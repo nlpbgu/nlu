@@ -17,6 +17,8 @@ class DecoupledSentencePairFeatureExtractor(SentencePairFeatureExtractor):
                  r_encoder: Seq2VecEncoder,
                  joiner: torch.nn.Module
                  ):
+
+        print("DecoupledSentencePairFeatureExtractor")
         super(DecoupledSentencePairFeatureExtractor, self).__init__()
         self.l_embedding = l_embedding
         self.l_token_index_field = l_token_index_field
