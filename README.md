@@ -9,7 +9,9 @@ This repository hosts the code for the following paper:
 
 ### Running
 
-To run a portion of the pipeline, first clone this repository to your location.
+In order to run the code, first clone this repository to your location.
+
+
 
 
 
