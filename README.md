@@ -18,8 +18,9 @@ Arguments explanation:
 | augmentation - model to augmentation the unli data                                          | 
 | threshold - the threshold of the residual you decide to robust the unli                     | 
 | training_augmentation - after augmentation ,training the model with new augmentation data   | 
-
 ```
+
+
 
 To prepares SNLI and u-SNLI datasets (automatically downloads data) , run:
 
