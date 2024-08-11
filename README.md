@@ -13,9 +13,14 @@ This repository uses [Ducttape](https://github.com/jhclark/ducttape) to manage i
 of the experiment pipeline.
 
 To run a portion of the pipeline, first clone this repository to your location.
+
+
 To extract the raw data , run:
+
+
 ---python py_tapes/data.py --data dir_to_store_your_raw_data
-python 
+
+ 
 Then use the following command:
 
   ```bash
