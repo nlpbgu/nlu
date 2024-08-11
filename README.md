@@ -19,7 +19,7 @@ To extract the raw data , run:
 
 
 ```python 
-      python py_tapes/data.py --data dir_to_store_your_raw_data
+python py_tapes/data.py --data dir_to_store_your_raw_data
 ```
 
  
