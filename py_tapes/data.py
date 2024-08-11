@@ -94,7 +94,7 @@ def usnli_qrels_task(u_snli_csv_dir, out_dir):
                     "--out", usnli_qrels_out_dir])
 
 # Execute tasks
-# snli_task("snli_dataset")
-# usnli_csv_task("usnli_dataset")
-# snli_qrels_task("snli_qrels")
+snli_task("snli_dataset")
+usnli_csv_task("usnli_dataset")
+snli_qrels_task("snli_qrels")
 usnli_qrels_task("usnli_dataset", "usnli_qrels")
