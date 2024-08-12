@@ -1,8 +1,6 @@
 ## UNLI Commonsense Reasoning Augmentation ACL 2024
 
-This repository hosts the code for the following paper:
- * Tongfei Chen*, Zhengping Jiang*, Adam Poliak, Keisuke Sakaguchi, Benjamin Van Durme (2020): 
-   Uncertain natural language inference. In _Proceedings of ACL_.
+This repository contains the code for the paper titled "UNLI Commonsense Reasoning Augmentation," presented at ACL 2024. The paper introduces an enhancement to the UNLI model by integrating commonsense reasoning using the COMET-ATOMIC 2020 knowledge graph. Our approach identifies instances with high prediction residuals during training and augments them with commonsense reasoning to improve the model's performance. This method demonstrates that incorporating commonsense knowledge significantly enhances the model's ability to capture nuanced inferences in natural language tasks.
 
 ### Prerequisites
  * Python >= 3.6
@@ -25,11 +23,12 @@ Arguments explanation:
 
 To prepares SNLI and u-SNLI datasets (automatically downloads data) , run:
 
-### Training
 
 ```python 
 python py_tapes/data.py --root_dir
 ```
+
+### Training
 
 To trains baseline UNLI without augmentation , run:
 
