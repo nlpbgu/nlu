@@ -26,7 +26,7 @@ def regression_task(out_dir,root_dir,dataset,gpu_id,augmentation,training,thresh
             command.extend(['--threshold', threshold])
 
     if training :
-        print("training augmentation")
+        print("training augmentation...")
         command.extend(['--training_augmentation'])
 
 
