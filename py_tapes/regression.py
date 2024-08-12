@@ -59,17 +59,11 @@ def plan_regression():
     parser.add_argument("--gpuid", type=int, default=0)
 
 
-
     ARGS = parser.parse_args()
     print("PYTHONPATH" , os.getenv('PYTHONPATH'))
     rootdir =  ARGS.rootdir
     outdir = ARGS.outdir
-    print("rootdir:" , rootdir,"\n")
-    print("rootdir:" , outdir,"\n")
-    print("training_augmentation:" , ARGS.training_augmentation,"\n")
-    print("--augmentation:" , ARGS.augmentation,"\n")
-    # rootdir = r"/sise/home/orisim/projects/UNLI/"
-    # out_dir = rootdir
+
     threshold = ARGS.threshold
     augmentation  , training = ARGS.augmentation , ARGS.training_augmentation
     gpu_id = None
