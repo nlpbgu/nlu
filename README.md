@@ -21,9 +21,11 @@ Arguments explanation:
 ```
 
 
+### Data
 
 To prepares SNLI and u-SNLI datasets (automatically downloads data) , run:
 
+### Training
 
 ```python 
 python py_tapes/data.py --root_dir
