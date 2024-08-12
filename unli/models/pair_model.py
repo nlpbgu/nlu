@@ -23,7 +23,7 @@ from unli.utils.augmentation_commonsense import Augmentation
 from unli.data.storage import KeyValueStore
 from scripts.util import *
 
-   
+
 class SentencePairModel(Model):
 
     def __init__(self,
