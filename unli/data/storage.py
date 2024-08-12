@@ -8,6 +8,7 @@ import os
 import subprocess
 import redis_server
 import asyncio
+import time
 
 TK = TypeVar('TK')
 TV = TypeVar('TV')
@@ -228,10 +229,9 @@ class KeyValueStore:
         return new_key
 
     def add_new_entry(self, filepath, value):
-        """
-        Adds a new entry with an auto-incremented key suffix, using the file name as the prefix.
-        """
-        # prefix = self._get_prefix_from_filepath(filepath)
+
+
+        prefix = self._get_prefix_from_filepath(filepath)
         highest_suffix = self._get_highest_suffix(filepath)
         new_suffix = highest_suffix + 1
         new_key = f"{prefix}train-{new_suffix}"
@@ -248,7 +248,8 @@ class KeyValueStore:
 
         process = subprocess.Popen([redis_server.REDIS_SERVER_PATH])
         # os.system(redis_server.REDIS_SERVER_PATH)
-        process.wait()
+        # process.wait()
+        time.sleep(8)
 
         print("Process finished with exit code", process.returncode)
         redis_client = redis.StrictRedis(host=redis_host, port=redis_port, db=redis_db)
