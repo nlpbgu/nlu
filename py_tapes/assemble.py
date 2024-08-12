@@ -7,15 +7,15 @@ import argparse
 # unli = r"/sise/home/orisim/projects/UNLI/"
 
 
-unli = os.getenv('PYTHONPATH')
-snli_qrels = os.path.join(unli,"snli_qrels")
-usnli_qrels =os.path.join(unli,"usnli_qrels")
-aggregator = "mean"
+# unli = os.getenv('PYTHONPATH')
+# snli_qrels = os.path.join(unli,"snli_qrels")
+# usnli_qrels =os.path.join(unli,"usnli_qrels")
+# aggregator = "mean"
 
 
-def surrogate_scores(snli, usnli, aggregator, out):
+def surrogate_scores(rootdir,snli, usnli, aggregator, out):
     command = [
-        "python", f"{unli}/scripts/compute_surrogates.py",
+        "python", f"{rootdir}/scripts/compute_surrogates.py",
         "--snli", snli,
         "--usnli", f"{usnli}/train.qrels",
         "--aggregator", aggregator
@@ -24,10 +24,10 @@ def surrogate_scores(snli, usnli, aggregator, out):
         subprocess.run(command, stdout=output_file)
 
 
-def snli_with_surrogates_dataset(snli, usnli, surrogate, out):
+def snli_with_surrogates_dataset(rootdir,snli, usnli, surrogate, out):
     os.makedirs(out, exist_ok=True)
     command = [
-        "python", f"{unli}/scripts/gen_snli_with_surrogates_dataset.py",
+        "python", f"{rootdir}/scripts/gen_snli_with_surrogates_dataset.py",
         "--input", f"{snli}/train.qrels",
         "--surrogate", surrogate
     ]
@@ -45,10 +45,10 @@ def snli_with_surrogates_dataset(snli, usnli, surrogate, out):
     shutil.copy(f"{usnli}/test.qrels", os.path.join(out, "test.qrels"))
 
 
-def snli_combined_with_usnli_dataset(snli, usnli, surrogate, out):
+def snli_combined_with_usnli_dataset(rootdir,snli, usnli, surrogate, out):
     os.makedirs(out, exist_ok=True)
     command = [
-        "python", f"{unli}/scripts/gen_combined_fallback_surrogate_dataset.py",
+        "python", f"{rootdir}/scripts/gen_combined_fallback_surrogate_dataset.py",
         "--snli", f"{snli}/train.qrels",
         "--usnli", f"{usnli}/train.qrels",
         "--surrogate", surrogate
@@ -83,7 +83,7 @@ def usnli_dataset(snli, usnli, out):
 
 # Execute the tasks
 
-surrogate_scores(snli_qrels, usnli_qrels, aggregator, "surrogate.scores")
-snli_with_surrogates_dataset(snli_qrels, usnli_qrels, "surrogate.scores", unli+"/surrogate_dataset")
-snli_combined_with_usnli_dataset(snli_qrels, usnli_qrels, "surrogate.scores", unli+"/combined_dataset")
-usnli_dataset(snli_qrels, usnli_qrels, os.path.join(unli, "usnli_dataset"))
+# surrogate_scores(snli_qrels, usnli_qrels, aggregator, "surrogate.scores")
+# snli_with_surrogates_dataset(snli_qrels, usnli_qrels, "surrogate.scores", unli+"/surrogate_dataset")
+# snli_combined_with_usnli_dataset(snli_qrels, usnli_qrels, "surrogate.scores", unli+"/combined_dataset")
+# usnli_dataset(snli_qrels, usnli_qrels, os.path.join(unli, "usnli_dataset"))

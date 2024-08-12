@@ -9,7 +9,7 @@ import subprocess
 import urllib.request
 import zipfile
 import argparse
-# from py_tapes.assemble import
+from py_tapes.assemble import *
 
 
 # Define global variables
@@ -20,15 +20,15 @@ usnli_url = "http://nlp.jhu.edu/unli/u-snli.zip"
 parser = argparse.ArgumentParser(description="")
 parser.add_argument("--rootdir", type=str, default="", help="Path to root dir of your repository")
 ARGS = parser.parse_args()
-root_dir = ARGS.rootdir # r"/sise/home/orisim/projects/UNLI/"
-os.environ['PYTHONPATH'] = root_dir
+rootdir = ARGS.rootdir
+os.environ['PYTHONPATH'] = rootdir
 
 
 # Task functions
 def download_and_extract(url, output_dir):
     # Download the zip file
     zip_filename = os.path.basename(url)
-    zip_path = os.path.join(root_dir, zip_filename)
+    zip_path = os.path.join(rootdir, zip_filename)
     urllib.request.urlretrieve(url, zip_path)
 
     # Extract the contents
@@ -55,7 +55,7 @@ def move_all_files(source_dir, dest_dir):
 
 
 def snli_task(out_dir):
-    snli_out_dir = os.path.join(root_dir, out_dir)
+    snli_out_dir = os.path.join(rootdir, out_dir)
     os.makedirs(snli_out_dir, exist_ok=True)
     download_and_extract(snli_url, snli_out_dir)
     # snli_extracted_dir = os.path.join(snli_out_dir, "snli_1.0")
@@ -65,7 +65,7 @@ def snli_task(out_dir):
     # os.rmdir(snli_extracted_dir)
 
 def usnli_csv_task(out_dir):
-    usnli_out_dir = os.path.join(root_dir, out_dir)
+    usnli_out_dir = os.path.join(rootdir, out_dir)
     os.makedirs(usnli_out_dir, exist_ok=True)
     download_and_extract(usnli_url, usnli_out_dir)
     # shutil.move(os.path.join(usnli_out_dir, "*.csv"), usnli_out_dir)
@@ -73,11 +73,11 @@ def usnli_csv_task(out_dir):
 
 
 def snli_qrels_task( out_dir):
-    snli_dir = os.path.join(root_dir, "snli_dataset/snli_1.0")
-    snli_qrels_out_dir = os.path.join(root_dir, out_dir)
+    snli_dir = os.path.join(rootdir, "snli_dataset/snli_1.0")
+    snli_qrels_out_dir = os.path.join(rootdir, out_dir)
     os.makedirs(snli_qrels_out_dir, exist_ok=True)
 
-    subprocess.run(["python", os.path.join(root_dir, "scripts/snli_to_qrels.py"),
+    subprocess.run(["python", os.path.join(rootdir, "scripts/snli_to_qrels.py"),
                     "--snli", os.path.join(snli_dir, "snli_1.0"),
                     "--out", snli_qrels_out_dir])
 
@@ -85,12 +85,12 @@ def snli_qrels_task( out_dir):
 def usnli_qrels_task(u_snli_csv_dir, out_dir):
     # unli_dir = os.path.join(root_dir, unli_dir)
 
-    usnli_csv_dir = os.path.join(root_dir, u_snli_csv_dir)
-    usnli_qrels_out_dir = os.path.join(root_dir, out_dir)
+    usnli_csv_dir = os.path.join(rootdir, u_snli_csv_dir)
+    usnli_qrels_out_dir = os.path.join(rootdir, out_dir)
 
     os.makedirs(usnli_qrels_out_dir, exist_ok=True)
-    subprocess.run(["python", os.path.join(root_dir, "scripts/usnli_to_qrels_align.py"),
-                    "--snli", os.path.join(root_dir, "snli_qrels"),
+    subprocess.run(["python", os.path.join(rootdir, "scripts/usnli_to_qrels_align.py"),
+                    "--snli", os.path.join(rootdir, "snli_qrels"),
                     "--usnli_train", os.path.join(usnli_csv_dir, "train.csv"),
                     "--usnli_dev", os.path.join(usnli_csv_dir, "dev.csv"),
                     "--usnli_test", os.path.join(usnli_csv_dir, "test.csv"),
@@ -102,4 +102,13 @@ usnli_csv_task("usnli_dataset")
 snli_qrels_task("snli_qrels")
 usnli_qrels_task("usnli_dataset", "usnli_qrels")
 
-subprocess.run(["python", os.path.join(root_dir, "py_tapes","assemble.py")])
+
+snli_qrels = os.path.join(rootdir,"snli_qrels")
+usnli_qrels =os.path.join(rootdir,"usnli_qrels")
+aggregator = "mean"
+
+surrogate_scores(rootdir,snli_qrels, usnli_qrels, aggregator, "surrogate.scores")
+snli_with_surrogates_dataset(rootdir,snli_qrels, usnli_qrels, "surrogate.scores", rootdir+"/surrogate_dataset")
+snli_combined_with_usnli_dataset(rootdir,snli_qrels, usnli_qrels, "surrogate.scores", rootdir+"/combined_dataset")
+usnli_dataset(snli_qrels, usnli_qrels, os.path.join(rootdir, "usnli_dataset"))
+
