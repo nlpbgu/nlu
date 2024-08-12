@@ -25,12 +25,13 @@ Arguments explanation:
 
 To prepares SNLI and u-SNLI datasets (automatically downloads data) , run:
 
-### Training
+
 
 ```python 
 python py_tapes/data.py --root_dir
 ```
 
+### Training
 To trains baseline UNLI without augmentation , run:
 
 
