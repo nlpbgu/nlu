@@ -16,7 +16,6 @@ from py_tapes.assemble import *
 snli_url = "https://nlp.stanford.edu/projects/snli/snli_1.0.zip"
 usnli_url = "http://nlp.jhu.edu/unli/u-snli.zip"
 
-# root_dir = r"C:\Users\User\Desktop\MSc\NLU\unli"
 parser = argparse.ArgumentParser(description="")
 parser.add_argument("--rootdir", type=str, default="", help="Path to root dir of your repository")
 ARGS = parser.parse_args()
