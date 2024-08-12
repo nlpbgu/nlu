@@ -57,15 +57,13 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
 
         if augmentation == "comet":
             model_path = "/sise/home/orisim/projects/UNLI/comet-atomic_2020_BART_aaai"
-            model_path = os.path.join(rootdir,"comet-atomic_2020_BART_aaai")
+            model_path = os.path.join(rootdir,"pretrained_augm","comet-atomic_2020_BART_aaai")
             download_files("https://huggingface.co/mismayil/comet-bart-ai2/tree/main", model_path)
             augm_mode = Augmentation(model_path, modify_special_token)
 
         if augmentation == "bart":
-            model_path = "stanford-oval/paraphraser-bart-large"
 
-            model_path = "/sise/home/orisim/projects/UNLI/bart_stanford/"
-            model_path = os.path.join(rootdir,"bart_stanford")
+            model_path = os.path.join(rootdir,"pretrained_augm","bart_stanford")
             download_files("https://huggingface.co/stanford-oval/paraphraser-bart-large/resolve/main", model_path)
             modify_special_token = False
             augm_mode = BartAugmentation(model_path,modify_special_token)

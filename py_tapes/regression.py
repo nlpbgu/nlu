@@ -80,7 +80,7 @@ def plan_regression():
     for scenario, dataset_path in dataset.items():
         scenario_out_dir = os.path.join(outdir  ,"comet" , scenario)
         # regression_task(scenario_out_dir, rootdir, dataset_path , gpu_id, augmentation , training , threshold )
-        regression(rootdir,dataset_path,ARGS.seed,ARGS.pretrained,outdir,ARGS.margin,ARGS.num_samples,ARGS.batch_size,ARGS.gpuid,augmentation,training,threshold)
+        regression(rootdir,dataset_path,ARGS.seed,ARGS.pretrained,scenario_out_dir,ARGS.margin,ARGS.num_samples,ARGS.batch_size,ARGS.gpuid,augmentation,training,threshold)
 
 
 

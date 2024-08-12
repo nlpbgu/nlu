@@ -82,7 +82,7 @@ def add_row_to_r(file_path, data):
 
 def download_files(url, save_dir):
 
-    files = ['.gitattributes','README.md''added_tokens.json','config.json','merges.txt','pytorch_model.bin','special_tokens_map.json','tokenizer_config.json','vocab.json']
+    files = ['.gitattributes','README.md','added_tokens.json','config.json','merges.txt','pytorch_model.bin','special_tokens_map.json','tokenizer_config.json','vocab.json']
 
 
     # Ensure the save directory exists
@@ -103,7 +103,7 @@ def download_files(url, save_dir):
 
         # Download the file
         print(f"Downloading '{file_name}'...")
-        response = requests.get(url)
+        response = requests.get(os.path.join(url,file_name))
 
         # Save the file content to the specified directory
         with open(file_path, "wb") as file:
