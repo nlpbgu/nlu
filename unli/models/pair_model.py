@@ -235,7 +235,7 @@ class SentencePairModel(Model):
                             # print(decoded_sentence)
                             # input["p_text"] =
 
-                            if abs(y[i].item() - y_pred[i].item()) > self.threshold and (  y[i].item() >= 0.84):  # y[i].item() <=0.15 or
+                            if abs(y[i].item() - y_pred[i].item()) > self.threshold and ( y[i].item() <=0.15 ):  #y[i].item() >= 0.84 y[i].item() <=0.15 or
 
                                 key_l = lid[i]
                                 key_r = rid[i]

@@ -1,6 +1,7 @@
 from typing import *
 import os
 import shutil
+import requests
 
 def read_dict(f: str) -> Dict[str, str]:
     d = {}
@@ -79,3 +80,33 @@ def add_row_to_r(file_path, data):
 
 
 
+def download_files(url, save_dir):
+
+    files = ['.gitattributes','README.md''added_tokens.json','config.json','merges.txt','pytorch_model.bin','special_tokens_map.json','tokenizer_config.json','vocab.json']
+
+
+    # Ensure the save directory exists
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
+
+    for file_name in files:
+        # Extract the file name from the URL
+        # file_name = os.path.basename(url)
+
+        # Create the full path to save the file
+        file_path = os.path.join(save_dir, file_name)
+
+        # Check if the file already exists
+        if os.path.exists(file_path):
+            print(f"File '{file_name}' already exists in '{save_dir}'. Skipping download.")
+            continue
+
+        # Download the file
+        print(f"Downloading '{file_name}'...")
+        response = requests.get(url)
+
+        # Save the file content to the specified directory
+        with open(file_path, "wb") as file:
+            file.write(response.content)
+
+        print(f"File '{file_name}' downloaded and saved in '{save_dir}'.")

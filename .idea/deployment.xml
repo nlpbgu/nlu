@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="orisim@132.72.67.226:22 password (2)" remoteFilesAllowedToDisappearOnAutoupload="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="orisim@132.72.66.187:22 password (2)" remoteFilesAllowedToDisappearOnAutoupload="false">
     <serverData>
       <paths name="orisim@132.72.64.130:22 password">
         <serverdata>
@@ -142,6 +142,13 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="orisim@132.72.66.187:22 password (2)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="orisim@132.72.66.197:22 password">
         <serverdata>
           <mappings>
@@ -178,6 +185,13 @@
         </serverdata>
       </paths>
       <paths name="orisim@132.72.67.185:22 password (3)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="orisim@132.72.67.185:22 password (4)">
         <serverdata>
           <mappings>
             <mapping deploy="/sise/home/orisim/projects/UNLI/" local="$PROJECT_DIR$" />
