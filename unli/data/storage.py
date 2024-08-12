@@ -150,9 +150,6 @@ class KeyValueStore:
             return dict(line.strip().split('\t', 1) for line in file if '\t' in line)
 
     def store_in_redis(self, filepath):
-        """
-        Stores key-value pairs from a file in Redis, using the file name as the prefix.
-        """
 
         # if self.redis_client.dbsize() > 0:
         #     return
@@ -249,8 +246,11 @@ class KeyValueStore:
         # output = result.stdout.decode('utf-8').strip()
 
 
-        subprocess.Popen([redis_server.REDIS_SERVER_PATH])
+        process = subprocess.Popen([redis_server.REDIS_SERVER_PATH])
         # os.system(redis_server.REDIS_SERVER_PATH)
+        process.wait()
+
+        print("Process finished with exit code", process.returncode)
         redis_client = redis.StrictRedis(host=redis_host, port=redis_port, db=redis_db)
 
 
