@@ -129,6 +129,7 @@ class BartAugmentation(Augmentation):
                 return results
 
         def extract_after_second_hypothesis(self,result):
+
                 # Split the sentence by "Hypothesis:" and take everything after the second occurrence
                 parts = result.split("hypothesis")
                 if len(parts) > 1:

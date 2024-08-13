@@ -235,7 +235,7 @@ class SentencePairModel(Model):
                             # print(decoded_sentence)
                             # input["p_text"] =
 
-                            if abs(y[i].item() - y_pred[i].item()) > self.threshold and ( y[i].item() <=0.15 ):  #y[i].item() >= 0.84 y[i].item() <=0.15 or
+                            if abs(y[i].item() - y_pred[i].item()) > self.threshold and ( y[i].item() >=0.8 or y[i].item() <= 0.1 ):  #y[i].item() >= 0.84 y[i].item() <=0.15 or
 
                                 key_l = lid[i]
                                 key_r = rid[i]
@@ -266,7 +266,6 @@ class SentencePairModel(Model):
 
             else:  # dev
 
-                print(f"epoch: {self.epoch}")
                 for i in range(0, len(lid)):
                     if mode == "pointwise-regression":
                         print(TrecEvalRefItem(lid[i], rid[i], y[i].item()), file=self.qrels)
@@ -392,7 +391,6 @@ class SentencePairModel(Model):
         if self.training:
             return loss_dict
 
-        print(self.test_mode) # to remove ori
         if reset:
             self.qrels.flush()
             self.qres.flush()
@@ -422,8 +420,6 @@ class SentencePairModel(Model):
                 ys = []
                 ys_pred = []
 
-                print(f"self.qrels.name {self.qrels.name}")
-                print(f"self.qres.name {self.qres.name}")
 
                 with open(self.qrels.name, mode='r') as qrels_f, open(self.qres.name, mode='r') as qres_f:
                     for l in qrels_f:
