@@ -34,11 +34,11 @@ class SentencePairModel(Model):
                  num_r1_candidates: int = 2,
                  num_r0_candidates: int = 10,
                  mode_weights={},
-                 reverse_vocab = None,
                  augmentation : Augmentation = None,
                  kv_store: KeyValueStore = None,
                  data_dir: str = None,
-                 threshold: float = 0.8
+                 threshold: float = 0.8,
+                 dir_augmentation:str = None,
                  ):
 
         super(SentencePairModel, self).__init__(vocab=None)
@@ -63,14 +63,12 @@ class SentencePairModel(Model):
         self.epoch = 0
         self.flag = True
         self.threshold = threshold
-        self.reverse_vocab = reverse_vocab,
         self.augmentation = augmentation
         self.ds_store = kv_store,
         self.data_dir = data_dir
         if self.ds_store[0] :
             self.new_key_r = self.ds_store[0]._get_highest_suffix(os.path.join(self.data_dir, "train.r"))
-        # print(self.new_key_l,"  ", self.new_key_r)
-        # print(self.ds_store[0].get_all_keys())
+        self.dir_augmentation = dir_augmentation
     @classmethod
     def from_params(cls, vocab, params):
 
@@ -235,7 +233,7 @@ class SentencePairModel(Model):
                             # print(decoded_sentence)
                             # input["p_text"] =
 
-                            if abs(y[i].item() - y_pred[i].item()) > self.threshold and ( y[i].item() >=0.8 or y[i].item() <= 0.1 ):  #y[i].item() >= 0.84 y[i].item() <=0.15 or
+                            if abs(y[i].item() - y_pred[i].item()) >= self.threshold and ( y[i].item() >=0.8 or y[i].item() <= 0.1 ):  #y[i].item() >= 0.84 y[i].item() <=0.15 or
 
                                 key_l = lid[i]
                                 key_r = rid[i]
@@ -258,9 +256,9 @@ class SentencePairModel(Model):
                                     new_qrels_data.append({"key_l": queries[i]["key_l"] ,"new_key_r" : self.new_key_r, "y": queries[i]["y"] , "new_r": r })
 
                     if len(new_qrels_data) > 0:
-                        add_row_to_qrels(os.path.join(self.data_dir,'augmentation','train.qrels')  , new_qrels_data )
+                        add_row_to_qrels(os.path.join(self.data_dir,'augmentation',self.dir_augmentation,'train.qrels')  , new_qrels_data )
                         # add_row_to_l(os.path.join(self.data_dir,'augmentation','train.l'), new_qrels_data)
-                        add_row_to_r(os.path.join(self.data_dir,'augmentation','train.r'), new_qrels_data)
+                        add_row_to_r(os.path.join(self.data_dir,'augmentation',self.dir_augmentation,'train.r'), new_qrels_data)
 
                 return {"loss": loss, **pred_dict}
 

@@ -5,3 +5,5 @@ transformers==2.11
 redis
 redis-server
 pandas
+overrides==3.1.0
+huggingface_hub

@@ -34,14 +34,13 @@ from unli.data.storage import KeyValueStore
 #
 
 # ARGS = parser.parse_args()
-def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gpuid,augmentation,training_augmentation,threshold):
+def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gpuid,augmentation,training_augmentation,threshold,dir_augmentation):
 
     logging.basicConfig(level=logging.INFO)
     torch.manual_seed(seed)
     vocab = Vocabulary()
 
-
-    dest_data_dir = os.path.join(data, "augmentation")
+    dest_data_dir = os.path.join(data, "augmentation",dir_augmentation)
     augm_mode = None
 
     if augmentation :
@@ -58,7 +57,7 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
         if augmentation == "comet":
             model_path = "/sise/home/orisim/projects/UNLI/comet-atomic_2020_BART_aaai"
             model_path = os.path.join(rootdir,"pretrained_augm","comet-atomic_2020_BART_aaai")
-            download_files("https://huggingface.co/mismayil/comet-bart-ai2/tree/main", model_path)
+            download_files("https://huggingface.co/mismayil/comet-bart-ai2/resolve/main/", model_path)
             augm_mode = Augmentation(model_path, modify_special_token)
 
         if augmentation == "bart":
@@ -85,7 +84,8 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
         augmentation = augm_mode ,  # Augmentation(model_path) if ARGS.augmentation else None
         kv_store = kv_store if augmentation else None,
         data_dir = data ,
-        threshold = float(threshold)
+        threshold = float(threshold),
+        dir_augmentation = dir_augmentation
     )
     model.cuda()
 

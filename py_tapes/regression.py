@@ -3,6 +3,7 @@ import shutil
 import subprocess
 import argparse
 from unli.commands.regression import regression
+from datetime import datetime
 
 def regression_task(out_dir,root_dir,dataset,gpu_id,augmentation,training,threshold):
 
@@ -48,6 +49,10 @@ def plan_regression():
     parser.add_argument("--augmentation", type=str, help="Enable augmentation")  # action='store_true'
     parser.add_argument("--training_augmentation", action='store_true', help="trainig the augmentation you created")
     parser.add_argument("--threshold", type=str , help="threshold to be reference" , default="0.8")
+    parser.add_argument("--nli", type=str, help="type of nli. can be [ENT,CON,NEU]")
+    parser.add_argument("--nli1", type=str, help="")
+    parser.add_argument("--nli2", type=str, help="")
+    parser.add_argument("--dir_augmentation", type=str, help="this parameter to identity the directory to training our augmentation")
 
     parser.add_argument("--outdir", type=str, default="", help="Output path to store the weights")
     parser.add_argument("--pretrained", type=str, default="", help="Pretrained model")
@@ -62,6 +67,9 @@ def plan_regression():
     print("PYTHONPATH" , os.getenv('PYTHONPATH'))
     rootdir =  ARGS.rootdir
     outdir = ARGS.outdir
+    nli1 = ARGS.nli1
+    nli2 = ARGS.nli2
+    nli = ARGS.nli
 
     threshold = ARGS.threshold
     augmentation  , training = ARGS.augmentation , ARGS.training_augmentation
@@ -76,10 +84,26 @@ def plan_regression():
         # 'hyp-only-usnli': '/path/to/hyp_only_usnli_dataset'
     }
 
+
     for scenario, dataset_path in dataset.items():
-        scenario_out_dir = os.path.join(outdir  ,"comet" , scenario)
+
+        if augmentation:
+
+            # timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            # dirid = f"_{timestamp}_{augmentation}_threshold_{threshold}_nli1_{nli1}_nli2_{nli2}_nli_{nli}"
+            dir_augmentation = f"{scenario}_aug_{augmentation}_threshold_{threshold}_nli1_{nli1}_nli2_{nli2}_nli_{nli}"
+            print("dirid: " , dir_augmentation)
+            scenario_out_dir = os.path.join(outdir, "comet", f"{dir_augmentation}")
+
+        if training:
+            dir_augmentation = ARGS.dir_augmentation
+            scenario_out_dir = os.path.join(outdir, "comet", f"{dir_augmentation}_trainingaugmentation")
+            # scenario_out_dir = os.path.join(outdir, "comet", f"{scenario}{dirid}")
+            # scenario_out_dir = os.path.join(outdir, "comet",scenario)
+
+
         # regression_task(scenario_out_dir, rootdir, dataset_path , gpu_id, augmentation , training , threshold )
-        regression(rootdir,dataset_path,ARGS.seed,ARGS.pretrained,scenario_out_dir,ARGS.margin,ARGS.num_samples,ARGS.batch_size,ARGS.gpuid,augmentation,training,threshold)
+        regression(rootdir,dataset_path,ARGS.seed,ARGS.pretrained,scenario_out_dir,ARGS.margin,ARGS.num_samples,ARGS.batch_size,ARGS.gpuid,augmentation,training,threshold,dir_augmentation)
 
 
 
