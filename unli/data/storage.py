@@ -249,7 +249,8 @@ class KeyValueStore:
         process = subprocess.Popen([redis_server.REDIS_SERVER_PATH])
         # os.system(redis_server.REDIS_SERVER_PATH)
         # process.wait()
-        time.sleep(8)
+        time.sleep(5
+                   )
 
         print("Process finished with exit code", process.returncode)
         redis_client = redis.StrictRedis(host=redis_host, port=redis_port, db=redis_db)
