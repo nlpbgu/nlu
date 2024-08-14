@@ -110,7 +110,7 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
     iterator.index_with(vocab)
 
 
-    print(f"{'Training your augmentation ...' if training_augmentation else f'Create augmentation to {augmentation} model , threshold = { float(threshold)} , nli1 = {nli} nli2 = {nli2} nli = {nli}'}")
+    print(f"{'Training your augmentation parameters... ' if training_augmentation else 'Create augmentation to parameters... '} {augmentation} model , threshold = { float(threshold)} , nli1 = {nli1} nli2 = {nli2} nli = {nli}")
 
     trainer = Trainer(
         model=model,
@@ -128,8 +128,14 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
 
     trainer.train()
 
+    print("\n",f"{'The Training your augmentation parameters... ' if training_augmentation else 'Create augmentation to parameters... '} {augmentation} model , threshold = { float(threshold)} , nli1 = {nli1} nli2 = {nli2} nli = {nli} was Done")
+
     if augmentation:
-        print(f"The data augmentation saved at {dest_data_dir}")
+        print("\n",f"The data augmentation saved at {dest_data_dir}")
+
+    print("\n",f"The weights to saved at {out}")
+
+
 # output_path_dev = r"/sise/home/orisim/projects/UNLI/results_predictions_dev.csv"
 # output_path_train = r"/sise/home/orisim/projects/UNLI/results_predictions_train.csv"
 #
