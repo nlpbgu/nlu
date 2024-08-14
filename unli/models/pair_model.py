@@ -241,10 +241,10 @@ class SentencePairModel(Model):
 
                             if (    abs(y[i].item() - y_pred[i].item()) >= self.threshold and \
                                     (\
-                                           ( self.nlp == "NEU" and y[i].item() >= self.nli1 and y[i].item() <= self.nli2 ) \
-                                        or ( self.nlp1 is None and self.nlp2 is not None  and y[i].item() >= self.nli2  ) \
-                                        or ( self.nlp1 is not None and self.nlp2 is  None  and y[i].item() <= self.nli1 )
-                                        or (self.nlp1 is not None and self.nlp2 is not None and ( y[i].item() <= self.nli1 or y[i].item() >= self.nli2 ) )
+                                           ( self.nli == "NEU" and y[i].item() >= self.nli1 and y[i].item() <= self.nli2 ) \
+                                        or ( self.nli1 is None and self.nlp2 is not None  and y[i].item() >= self.nli2  ) \
+                                        or ( self.nli1 is not None and self.nlp2 is  None  and y[i].item() <= self.nli1 )
+                                        or (self.nli1 is not None and self.nlp2 is not None and ( y[i].item() <= self.nli1 or y[i].item() >= self.nli2 ) )
 
                                     )\
 
