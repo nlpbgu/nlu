@@ -91,8 +91,8 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
         threshold = float(threshold),
         dir_augmentation = dir_augmentation,
         nli = nli,
-        nli1 = None if nli1 == 'None' or not nli1 else float(nli1),
-        nli2 = None if nli2 is 'None' or not nli2 else float(nli2),
+        nli1 = None if nli1 == 'None' else float(nli1),
+        nli2 = None if nli2 is 'None' else float(nli2),
 
     )
     model.cuda()
