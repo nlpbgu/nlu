@@ -42,7 +42,11 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
 
     dest_data_dir = os.path.join(data, "augmentation",dir_augmentation)
     augm_mode = None
-    nli, nli1, nli2 = None, None, None
+
+    pattern = r"nli1_([0-9.]+|None)_nli2_([0-9.]+|None)_nli_([A-Za-z_]+|None)"
+    match = re.search(pattern, dir_augmentation)
+    nli, nli1, nli2 = match.group(3), match.group(1), match.group(2)
+
     if augmentation :
 
         copy_files_to_new_directory(data, dest_data_dir )
@@ -53,10 +57,6 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
         kv_store.store_in_redis( data_dir_r)
 
         modify_special_token = True
-
-        pattern = r"nli1_([0-9.]+|None)_nli2_([0-9.]+|None)_nli_([A-Za-z_]+|None)"
-        match = re.search(pattern, dir_augmentation)
-        nli, nli1, nli2 = match.group(3) , match.group(1) , match.group(2)
 
 
         if augmentation == "comet":
