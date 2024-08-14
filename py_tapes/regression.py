@@ -92,7 +92,7 @@ def plan_regression():
             # timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             # dirid = f"_{timestamp}_{augmentation}_threshold_{threshold}_nli1_{nli1}_nli2_{nli2}_nli_{nli}"
             dir_augmentation = f"{scenario}_aug_{augmentation}_threshold_{threshold}_nli1_{nli1}_nli2_{nli2}_nli_{nli}"
-            print("dirid: " , dir_augmentation)
+            # print("dirid: " , dir_augmentation)
             scenario_out_dir = os.path.join(outdir, "comet", f"{dir_augmentation}")
 
         if training:

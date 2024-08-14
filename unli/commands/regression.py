@@ -42,7 +42,7 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
 
     dest_data_dir = os.path.join(data, "augmentation",dir_augmentation)
     augm_mode = None
-
+    nli, nli1, nli2 = None, None, None
     if augmentation :
 
         copy_files_to_new_directory(data, dest_data_dir )
@@ -57,8 +57,7 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
         pattern = r"nli1_([0-9.]+|None)_nli2_([0-9.]+|None)_nli_([A-Za-z_]+|None)"
         match = re.search(pattern, dir_augmentation)
         nli, nli1, nli2 = match.group(3) , match.group(1) , match.group(2)
-        print("nli","nli1","nli2")
-        print(nli,nli1,nli2)
+
 
         if augmentation == "comet":
             # model_path = "/sise/home/orisim/projects/UNLI/comet-atomic_2020_BART_aaai"
@@ -74,7 +73,6 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
             augm_mode = BartAugmentation(model_path,modify_special_token)
 
 
-    print(f"threshold = { float(threshold)}")
     model: torch.nn.Module = SentencePairModel(
         extractor=CoupledSentencePairFeatureExtractor(
             joiner=BERTConcatenator(),
@@ -93,8 +91,8 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
         threshold = float(threshold),
         dir_augmentation = dir_augmentation,
         nli = nli,
-        nli1 = float(nli1),
-        nli2 =float(nli2),
+        nli1 = None if nli1 is None else float(nli1),
+        nli2 = None if nli2 is None else float(nli2),
 
     )
     model.cuda()
@@ -111,6 +109,8 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
     iterator = BasicIterator(batch_size=batch_size)
     iterator.index_with(vocab)
 
+
+    print(f"{'Training your augmentation ...' if training_augmentation else f'Create augmentation to {augmentation} model , threshold = { float(threshold)} , nli1 = {nli} nli2 = {nli2} nli = {nli}'}")
 
     trainer = Trainer(
         model=model,
