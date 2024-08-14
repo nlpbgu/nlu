@@ -133,7 +133,7 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
     if augmentation:
         print("\n",f"The data augmentation saved at {dest_data_dir}")
 
-    print("\n",f"The weights to saved at {out}")
+    print("\n",f"The weights saved at {out}")
 
 
 # output_path_dev = r"/sise/home/orisim/projects/UNLI/results_predictions_dev.csv"
