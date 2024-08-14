@@ -110,3 +110,10 @@ def download_files(url, save_dir):
             file.write(response.content)
 
         print(f"File '{file_name}' downloaded and saved in '{save_dir}'.")
+
+def remove_dir(save_dir):
+    # Check if the directory exists
+    if os.path.exists(save_dir):
+        # Remove the directory and all its contents
+        shutil.rmtree(save_dir)
+        print(f"Directory '{save_dir}' has been removed.")

@@ -12,7 +12,7 @@ import torch
 import logging
 from torch.optim import Adam
 import pandas as pd
-from scripts.util import copy_files_to_new_directory , download_files
+from scripts.util import copy_files_to_new_directory , download_files , remove_dir
 import os
 from unli.utils.augmentation_commonsense import Augmentation , BartAugmentation
 from unli.data.storage import KeyValueStore
@@ -50,6 +50,8 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
     if augmentation :
 
         copy_files_to_new_directory(data, dest_data_dir )
+        remove_dir(out)
+
         kv_store =  KeyValueStore.open()
         data_dir_l = os.path.join(data,"train.l")
         data_dir_r = os.path.join(data,"train.r")
@@ -57,7 +59,6 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
         kv_store.store_in_redis( data_dir_r)
 
         modify_special_token = True
-
 
         if augmentation == "comet":
             # model_path = "/sise/home/orisim/projects/UNLI/comet-atomic_2020_BART_aaai"
