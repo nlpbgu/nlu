@@ -128,6 +128,8 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
 
     trainer.train()
 
+    if augmentation:
+        print(f"The data augmentation saved at {dest_data_dir}")
 # output_path_dev = r"/sise/home/orisim/projects/UNLI/results_predictions_dev.csv"
 # output_path_train = r"/sise/home/orisim/projects/UNLI/results_predictions_train.csv"
 #
