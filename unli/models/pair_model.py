@@ -39,7 +39,10 @@ class SentencePairModel(Model):
                  data_dir: str = None,
                  threshold: float = 0.8,
                  dir_augmentation:str = None,
-                 ):
+                 nli :str = None,
+                 nli1: str = None,
+                 nli2: str = None
+                ):
 
         super(SentencePairModel, self).__init__(vocab=None)
         self.extractor: SentencePairFeatureExtractor = extractor
@@ -69,6 +72,9 @@ class SentencePairModel(Model):
         if self.ds_store[0] :
             self.new_key_r = self.ds_store[0]._get_highest_suffix(os.path.join(self.data_dir, "train.r"))
         self.dir_augmentation = dir_augmentation
+        self.nli = nli
+        self.nli1 = nli1
+        self.nli2 = nli2
     @classmethod
     def from_params(cls, vocab, params):
 
@@ -233,7 +239,16 @@ class SentencePairModel(Model):
                             # print(decoded_sentence)
                             # input["p_text"] =
 
-                            if abs(y[i].item() - y_pred[i].item()) >= self.threshold and ( y[i].item() >=0.8 or y[i].item() <= 0.1 ):  #y[i].item() >= 0.84 y[i].item() <=0.15 or
+                            if (    abs(y[i].item() - y_pred[i].item()) >= self.threshold and \
+                                    (\
+                                           ( self.nlp == "NEU" and y[i].item() >= self.nli1 and y[i].item() <= self.nli2 ) \
+                                        or ( self.nlp1 is None and self.nlp2 is not None  and y[i].item() >= self.nli2  ) \
+                                        or ( self.nlp1 is not None and self.nlp2 is  None  and y[i].item() <= self.nli1 )
+                                        or (self.nlp1 is not None and self.nlp2 is not None and ( y[i].item() <= self.nli1 or y[i].item() >= self.nli2 ) )
+
+                                    )\
+
+                                ):
 
                                 key_l = lid[i]
                                 key_r = rid[i]

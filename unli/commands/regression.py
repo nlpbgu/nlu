@@ -16,7 +16,7 @@ from scripts.util import copy_files_to_new_directory , download_files
 import os
 from unli.utils.augmentation_commonsense import Augmentation , BartAugmentation
 from unli.data.storage import KeyValueStore
-
+import re
 
 # parser = argparse.ArgumentParser(description="")
 # parser.add_argument("--rootdir", type=str, default="", help="root dir of your repository")
@@ -54,14 +54,20 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
 
         modify_special_token = True
 
+        pattern = r"nli1_([0-9.]+|None)_nli2_([0-9.]+|None)_nli_([A-Za-z_]+|None)"
+        match = re.search(pattern, dir_augmentation)
+        nli, nli1, nli2 = match.group(3) , match.group(1) , match.group(2)
+        print("nli","nli1","nli2")
+        print(nli,nli1,nli2)
+
         if augmentation == "comet":
-            model_path = "/sise/home/orisim/projects/UNLI/comet-atomic_2020_BART_aaai"
+            # model_path = "/sise/home/orisim/projects/UNLI/comet-atomic_2020_BART_aaai"
             model_path = os.path.join(rootdir,"pretrained_augm","comet-atomic_2020_BART_aaai")
             download_files("https://huggingface.co/mismayil/comet-bart-ai2/resolve/main/", model_path)
             augm_mode = Augmentation(model_path, modify_special_token)
 
         if augmentation == "bart":
-
+            # model_path = "/sise/home/orisim/projects/UNLI/bart_stanford"
             model_path = os.path.join(rootdir,"pretrained_augm","bart_stanford")
             download_files("https://huggingface.co/stanford-oval/paraphraser-bart-large/resolve/main", model_path)
             modify_special_token = False
@@ -85,7 +91,11 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
         kv_store = kv_store if augmentation else None,
         data_dir = data ,
         threshold = float(threshold),
-        dir_augmentation = dir_augmentation
+        dir_augmentation = dir_augmentation,
+        nli = nli,
+        nli1 = float(nli1),
+        nli2 =float(nli2),
+
     )
     model.cuda()
 
