@@ -130,7 +130,7 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
 
     if augmentation:
         print("\n",f"The data augmentation saved at {dest_data_dir}")
-        print("\n",f"The amount of data was augmented is { kv_store._get_suffix(os.path.join(data,'train.r') , model.new_key_r) - model.last_org_hyp_key}")
+        # print("\n",f"The amount of data was augmented is { kv_store._get_suffix(os.path.join(data,'train.r') , model.new_key_r) - model.last_org_hyp_key}")
 
 
     print("\n",f"The weights saved at {out}")
