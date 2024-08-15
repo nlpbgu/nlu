@@ -209,7 +209,15 @@ class KeyValueStore:
         pre = "P" if prefix == "train.l_" else "H"
         new_key = f"SNLI-train-{pre}{max_suffix}"
 
-        return new_key
+        return new_key , max_suffix
+
+    def _get_suffix(self, filepath, full_key):
+
+        prefix = self._get_prefix_from_filepath(filepath)
+        pattern = re.compile(rf"{re.escape(prefix)}.*-(.)(\d+)$")
+        match = pattern.search(full_key)
+        if match:
+            return int(match.group(2))
 
     def get_the_next_id(self, current, filepath):
 

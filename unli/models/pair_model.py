@@ -70,7 +70,7 @@ class SentencePairModel(Model):
         self.ds_store = kv_store,
         self.data_dir = data_dir
         if self.ds_store[0] :
-            self.new_key_r = self.ds_store[0]._get_highest_suffix(os.path.join(self.data_dir, "train.r"))
+            self.new_key_r , self.last_org_hyp_key = self.ds_store[0]._get_highest_suffix(os.path.join(self.data_dir, "train.r"))
         self.dir_augmentation = dir_augmentation
         self.nli = nli
         self.nli1 = nli1

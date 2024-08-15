@@ -61,13 +61,11 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
         modify_special_token = True
 
         if augmentation == "comet":
-            # model_path = "/sise/home/orisim/projects/UNLI/comet-atomic_2020_BART_aaai"
             model_path = os.path.join(rootdir,"pretrained_augm","comet-atomic_2020_BART_aaai")
             download_files("https://huggingface.co/mismayil/comet-bart-ai2/resolve/main/", model_path)
             augm_mode = Augmentation(model_path, modify_special_token)
 
         if augmentation == "bart":
-            # model_path = "/sise/home/orisim/projects/UNLI/bart_stanford"
             model_path = os.path.join(rootdir,"pretrained_augm","bart_stanford")
             download_files("https://huggingface.co/stanford-oval/paraphraser-bart-large/resolve/main", model_path)
             modify_special_token = False
@@ -85,7 +83,6 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
         ),
         loss_func=torch.nn.BCELoss(),
         mode="regression",
-        # reverse_vocab = vocab.get_index_to_token_vocabulary(namespace="tags"),
         augmentation = augm_mode ,  # Augmentation(model_path) if ARGS.augmentation else None
         kv_store = kv_store if augmentation else None,
         data_dir = data ,
@@ -93,7 +90,7 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
         dir_augmentation = dir_augmentation,
         nli = nli,
         nli1 = None if nli1 == 'None' else float(nli1),
-        nli2 = None if nli2 is 'None' else float(nli2),
+        nli2 = None if nli2 == 'None' else float(nli2),
 
     )
     model.cuda()
@@ -111,7 +108,7 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
     iterator.index_with(vocab)
 
 
-    print(f"{'Training your augmentation parameters... ' if training_augmentation else 'Create augmentation to parameters... '} {augmentation} model , threshold = { float(threshold)} , nli1 = {nli1} nli2 = {nli2} nli = {nli}")
+    print(f"{'Training your augmentation parameters... ' if training_augmentation else 'Creating augmentation to parameters... '} {augmentation} model , threshold = { float(threshold)} , nli1 = {nli1} nli2 = {nli2} nli = {nli}")
 
     trainer = Trainer(
         model=model,
@@ -129,10 +126,12 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
 
     trainer.train()
 
-    print("\n",f"{'The Training your augmentation parameters... ' if training_augmentation else 'Create augmentation to parameters... '} {augmentation} model , threshold = { float(threshold)} , nli1 = {nli1} nli2 = {nli2} nli = {nli} was Done")
+    print("\n",f"{'Training your augmentation parameters... ' if training_augmentation else 'Creating augmentation to parameters... '} {augmentation} model , threshold = { float(threshold)} , nli1 = {nli1} nli2 = {nli2} nli = {nli} was Done")
 
     if augmentation:
         print("\n",f"The data augmentation saved at {dest_data_dir}")
+        print("\n",f"The amount of data was augmented is { kv_store._get_suffix(os.path.join(data,'train.r') , model.new_key_r) - model.last_org_hyp_key}")
+
 
     print("\n",f"The weights saved at {out}")
 
