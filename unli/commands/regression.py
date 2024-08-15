@@ -44,8 +44,12 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
     augm_mode = None
 
     pattern = r"nli1_([0-9.]+|None)_nli2_([0-9.]+|None)_nli_([A-Za-z_]+|None)"
+    pattern = r"aug_([A-Za-z_]+)_threshold_([0-9.]+)_nli1_([0-9.]+|None)_nli2_([0-9.]+|None)_nli_([A-Za-z_]+|None)"
+
     match = re.search(pattern, dir_augmentation)
-    nli, nli1, nli2 = match.group(3), match.group(1), match.group(2)
+    # nli, nli1, nli2 = match.group(3), match.group(1), match.group(2)
+    augmentation , threshold , nli1 , nli2 , nli = match.group(1) , match.group(2) , match.group(3) , match.group(4) , match.group(5)
+
 
     if augmentation :
 
