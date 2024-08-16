@@ -48,7 +48,8 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
 
     match = re.search(pattern, dir_augmentation)
     # nli, nli1, nli2 = match.group(3), match.group(1), match.group(2)
-    augmentation , threshold , nli1 , nli2 , nli = match.group(1) , match.group(2) , match.group(3) , match.group(4) , match.group(5)
+    augmentation_ , threshold , nli1 , nli2 , nli = match.group(1) , match.group(2) , match.group(3) , match.group(4) , match.group(5)
+
 
 
     if augmentation :
@@ -112,7 +113,7 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
     iterator.index_with(vocab)
 
 
-    print(f"{'Training your augmentation parameters... ' if training_augmentation else 'Creating augmentation to parameters... '} {augmentation} model , threshold = { float(threshold)} , nli1 = {nli1} nli2 = {nli2} nli = {nli}")
+    print(f"{'Training your augmentation parameters... ' if training_augmentation else 'Creating augmentation to parameters... '} {augmentation_} model , threshold = { float(threshold)} , nli1 = {nli1} nli2 = {nli2} nli = {nli}")
 
     trainer = Trainer(
         model=model,
@@ -130,7 +131,7 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
 
     trainer.train()
 
-    print("\n",f"{'Training your augmentation parameters... ' if training_augmentation else 'Creating augmentation to parameters... '} {augmentation} model , threshold = { float(threshold)} , nli1 = {nli1} nli2 = {nli2} nli = {nli} was Done")
+    print("\n",f"{'Training your augmentation parameters... ' if training_augmentation else 'Creating augmentation to parameters... '} {augmentation_} model , threshold = { float(threshold)} , nli1 = {nli1} nli2 = {nli2} nli = {nli} was Done")
 
     if augmentation:
         print("\n",f"The data augmentation saved at {dest_data_dir}")
