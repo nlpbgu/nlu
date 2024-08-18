@@ -1,8 +1,5 @@
-## UNLI Commonsense Reasoning Augmentation ACL 2024
+## UNLI Commonsense Reasoning Augmentation 2024
 
-This repository hosts the code for the following paper:
- * Tongfei Chen*, Zhengping Jiang*, Adam Poliak, Keisuke Sakaguchi, Benjamin Van Durme (2020): 
-   Uncertain natural language inference. In _Proceedings of ACL_.
 
 ### Prerequisites
  * Python >= 3.6
