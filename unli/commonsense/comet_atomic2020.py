@@ -10,7 +10,6 @@ class Comet:
     def __init__(self, model_path , modify_special_token = True):
 
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        print(f"model_path {model_path}")
         self.model = BartForConditionalGeneration.from_pretrained(pretrained_model_name_or_path = model_path).to(self.device) # , config = "https://huggingface.co/mismayil/comet-bart-ai2/resolve/main/config.json"
         if modify_special_token :
             self.tokenizer = self.modify_special_token(model_path , os.path.join(model_path,"special_tokens_map.json"))
@@ -33,13 +32,9 @@ class Comet:
       """Remove columns that are populated exclusively by pad_token_id"""
       keep_column_mask = input_ids.ne(pad_token_id).any(dim=0)
 
-      # print(f"pad_token_id:  ", pad_token_id)
-      # print(f"input_ids in tm: {input_ids}")
-
       if attention_mask is None:
           return input_ids[:, keep_column_mask]
       else:
-          # print(f"else: {(input_ids[:, keep_column_mask], attention_mask[:, keep_column_mask])}")
           return (input_ids[:, keep_column_mask], attention_mask[:, keep_column_mask])
 
 
@@ -64,7 +59,6 @@ class Comet:
             decs = []
             for batch in list(self.chunks(examples, self.batch_size)):
 
-                # batch = self.tokenizer.tokenize(batch[0], return_tensors="pt", truncation=True, padding="max_length").to(self.device)
 
                 self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -76,7 +70,6 @@ class Comet:
                 if len(tokens) > max_length:
                     tokens = tokens[:max_length]
 
-                # Convert tokens to IDs
                 ids = self.tokenizer.convert_tokens_to_ids(tokens)
 
                 # Padding
@@ -104,7 +97,6 @@ class Comet:
                     )
 
                 dec = self.tokenizer.batch_decode(summaries, skip_special_tokens=True, clean_up_tokenization_spaces=False)
-                # print("dec",dec)
 
                 decs.append(dec)
 

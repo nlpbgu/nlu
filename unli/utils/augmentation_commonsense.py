@@ -10,35 +10,27 @@ class Augmentation():
         def __init__(self,model_path: str = None , modify_special_token = True ):
 
                 print("model loading ...")
-                self.augmet_model = Comet(model_path, modify_special_token) # "/sise/home/orisim/projects/UNLI/comet-atomic_2020_BART_aaai" "mismayil/comet-bart-ai2"
+                self.augmet_model = Comet(model_path, modify_special_token)
                 self.augmet_model.model.zero_grad()
                 print("model loaded")
 
 
         def augmentation_commonsense_data(self, queries):
 
-                # print(f"all keys - {self.kv_store.get_all_keys()}")
                 queries_mod = []
-                # print("queries: ","size: ",len(queries),"\n",queries)
 
                 for query in queries:
                         query = f"Premise: {query['l']} Hypothesis: {query['r']} Paraphrase a Commonsense Hypothesis:"
                         queries_mod.append(query)
 
-                # print("queries_mod: ","size: ",len(queries_mod),"\n",queries_mod)
 
                 results = self.augmet_model.generate(queries_mod, decode_method="beam", num_generate=5)
-                # print("results before is size",len(results))
 
-                # specific_sentences = {"Remove this specific sentence"}
                 results = process_sentences(results,  specific_sentences_to_remove=queries)
                 # print("results after is size",len(results))
 
                 return results
 
-                # key_to_retrieve = input["hypothesis"]
-                # value = self.kv_store.get_value(self.data_dir_r,key_to_retrieve)
-                # print(f"Value for '{key_to_retrieve}': {value}")
 
 
 def process_sentences(list_of_lists, filter_words=('Generate', 'Explain'), specific_sentences_to_remove=(),
@@ -102,14 +94,11 @@ class BartAugmentation(Augmentation):
                 queries_mod = []
 
                 for query in queries:
-                        # print(query)
                         query = f"Premise: {query['l']} Hypothesis: {query['r']} Paraphrase a Commonsense Hypothesis:"
                         queries_mod.append(query)
 
-                # print("queries_mod: ","size: ",len(queries_mod),"\n",queries_mod)
 
                 results = self.augmet_model.generate(queries_mod, decode_method="beam", num_generate=5)
-                # print("results before is size",len(results))
 
 
                 results_bart_f =[]
