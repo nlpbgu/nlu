@@ -57,7 +57,6 @@ def copy_files_to_new_directory(existing_dir, new_dir):
 
 
 def add_row_to_qrels(file_path, data , iter_str = 'ITER'):
-
     with open(file_path, 'a') as file:
         for row in data:
             new_row = f"{row['key_l']}\t{iter_str}\t{row['new_key_r']}\t{row['y']}\n"
@@ -65,14 +64,12 @@ def add_row_to_qrels(file_path, data , iter_str = 'ITER'):
 
 
 def add_row_to_l(file_path, data):
-    # new_row = f"{document_id}\t{text}\n"
     with open(file_path, 'a') as file:
         for row in data:
             new_row = f"{row['new_key_l']}\t{row['l']}\n"
             file.write(new_row)
 
 def add_row_to_r(file_path, data):
-    # new_row = f"{document_id}\t{text}\n"
     with open(file_path, 'a') as file:
         for row in data:
             new_row = f"{row['new_key_r']}\t{row['new_r']}\n"
@@ -90,13 +87,9 @@ def download_files(url, save_dir):
         os.makedirs(save_dir)
 
     for file_name in files:
-        # Extract the file name from the URL
-        # file_name = os.path.basename(url)
 
-        # Create the full path to save the file
         file_path = os.path.join(save_dir, file_name)
 
-        # Check if the file already exists
         if os.path.exists(file_path):
             print(f"File '{file_name}' already exists in '{save_dir}'. Skipping download.")
             continue
@@ -105,14 +98,13 @@ def download_files(url, save_dir):
         print(f"Downloading '{file_name}'...")
         response = requests.get(os.path.join(url,file_name))
 
-        # Save the file content to the specified directory
         with open(file_path, "wb") as file:
             file.write(response.content)
 
         print(f"File '{file_name}' downloaded and saved in '{save_dir}'.")
 
 def remove_dir(save_dir):
-    # Check if the directory exists
+
     if os.path.exists(save_dir):
         # Remove the directory and all its contents
         shutil.rmtree(save_dir)
