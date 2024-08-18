@@ -14,11 +14,11 @@ Arguments explanation:
 | out_dir - dir to store the learning weights after the training done                                              |
 | augmentation - model to augmentation the unli data                                                               | 
 | threshold - the threshold of the residual you decide to robust the unli                                          |
-| nli - Optional. values {CON,NEU,ENT}. nessecary to use with nli1 and nli2 , when you want to augmentation NEU    | 
-| nli1 - Optional. values [0,1]. when you want to augmentation CON                                                 |
+| nli -   Optional. values {CON,NEU,ENT}. nessecary to use with nli1 and nli2 , when you want to augmentation NEU  | 
+| nli1 -  Optional. values [0,1]. when you want to augmentation CON                                                |
 | nli2 -  Optional. values [0,1]. when you want to augmentation ENT                                                | 
 | training_augmentation - after augmentation ,training the model with new augmentation data                        |
-| dir_augmentation - the name of the directory where the new dataset augmented stored                              | 
+| dir_augmentation - the name of the directory where the new augmentation data stored                              | 
 
 ```
 
@@ -55,6 +55,8 @@ To augmentation UNLI with baseline bart  , run:
 python py_tapes/regression.py --root_dir --out_dir --augmentation bart --threshold --nli1 --nli2 --nli
 ```
 
+
+### Retraining Data Augmentation
 
 To trains the regression model with the augmentation data , run:
 
