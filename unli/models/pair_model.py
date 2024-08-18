@@ -196,8 +196,6 @@ class SentencePairModel(Model):
         loss: torch.Tensor = None
         pred_dict: Dict[str, torch.Tensor] = None
 
-        # print(f"mode: {mode}") # to remove ori
-        # print( f"self.training: {self.training}")
 
         if mode.startswith("pointwise"):
             lid: List[str] = source["lid"]
@@ -221,24 +219,6 @@ class SentencePairModel(Model):
 
                     for i in range(0, len(lid)):
 
-                            # input = {
-                            #     "epoch": self.epoch ,
-                            #     "premises": lid[i],
-                            #     "hypothesis": rid[i],
-                            #     "y_unli": y[i].item(),
-                            #     "y_predicted_unli": y_pred[i].item()
-                            # }
-                            # self.results_predictions_train.append(input)
-                            # print(f"self.reverse_vocab: {self.reverse_vocab}")
-                            # print(f"reverse_vocab.get_index_to_token_vocabulary():")
-                            # print(self.reverse_vocab.get_index_to_token_vocabulary(namespace="tags"))
-                            # print(f"reverse_vocab.get_vocab_size():" )
-                            # print(self.reverse_vocab.get_vocab_size(namespace="tags"))
-                            # decoded_tokens = [self.reverse_vocab[id].replace("#", "") for id in l[i].cpu().numpy() if id not in [101,102,]]
-                            # decoded_sentence = " ".join(decoded_tokens)
-                            # print(decoded_sentence)
-                            # input["p_text"] =
-
                             if (    abs(y[i].item() - y_pred[i].item()) >= self.threshold and \
                                     (\
                                            ( self.nli == "NEU" and y[i].item() >= self.nli1 and y[i].item() <= self.nli2 ) \
@@ -259,20 +239,17 @@ class SentencePairModel(Model):
                     if len(queries) > 0:
 
                         augmn_data = self.augmentation.augmentation_commonsense_data(queries)
-                        # print("augmn_data is soze" , len(augmn_data))
                         for i,row in enumerate(augmn_data):
 
                             if len(row) > 0:
 
                                 for  r in row:
 
-                                    # self.new_key_l = lid[i] # self.ds_store[0].get_the_next_id(self.new_key_l,'l') #.add_new_entry(os.path.join(self.data_dir,"train.l"), queries[i]["l"])
                                     self.new_key_r = self.ds_store[0].get_the_next_id(self.new_key_r,'r') #.add_new_entry(os.path.join(self.data_dir,"train.r"), r)
                                     new_qrels_data.append({"key_l": queries[i]["key_l"] ,"new_key_r" : self.new_key_r, "y": queries[i]["y"] , "new_r": r })
 
                     if len(new_qrels_data) > 0:
                         add_row_to_qrels(os.path.join(self.data_dir,'augmentation',self.dir_augmentation,'train.qrels')  , new_qrels_data )
-                        # add_row_to_l(os.path.join(self.data_dir,'augmentation','train.l'), new_qrels_data)
                         add_row_to_r(os.path.join(self.data_dir,'augmentation',self.dir_augmentation,'train.r'), new_qrels_data)
 
                 return {"loss": loss, **pred_dict}

@@ -5,42 +5,6 @@ import argparse
 from unli.commands.regression import regression
 from datetime import datetime
 
-def regression_task(out_dir,root_dir,dataset,gpu_id,augmentation,training,threshold):
-
-    os.makedirs(out_dir, exist_ok=True)
-    
-    # os.environ['PYTHONPATH'] = unli_dir
-    
-    command = [
-        '/home/orisim/.virtualenvs/UNLI/bin/python', os.path.join(root_dir, 'unli', 'commands', 'regression.py'),
-        '--root_dir', root_dir,
-        '--data', dataset,
-        '--out', out_dir
-    ]
-
-    if gpu_id :
-        command.extend(['--gpu', str(gpu_id)])
-
-    if augmentation :
-        command.extend(['--augmentation', augmentation])
-        if threshold :
-            command.extend(['--threshold', threshold])
-
-    if training :
-        command.extend(['--training_augmentation'])
-
-
-    subprocess.run(command, check=True)
-
-    # Command to run regression.py script
-    # command = f"/home/orisim/.virtualenvs/UNLI/bin/python {os.path.join(unli_dir, 'unli', 'commands', 'regression.py')} --data {dataset} --out {out_dir} --batch_size 64" # training_augmentation --augmentation --pretrained /sise/home/orisim/projects/UNLI/comet-atomic_2020_BART_aaai/pytorch_model.bin
-    # command = f"/home/orisim/.virtualenvs/UNLI/bin/python {os.path.join(unli_dir, 'unli', 'commands', 'regression.py')} --data {dataset} --out {out_dir} --batch_size 64 --augmentation bart" # training_augmentation --augmentation --pretrained /sise/home/orisim/projects/UNLI/comet-atomic_2020_BART_aaai/pytorch_model.bin"
-    # command = f"/home/orisim/.virtualenvs/UNLI/bin/python {os.path.join(unli_dir, 'unli', 'commands', 'regression.py')} --data {dataset} --out {out_dir} --batch_size 64 --training_augmentation" # training_augmentation --augmentation --pretrained /sise/home/orisim/projects/UNLI/comet-atomic_2020_BART_aaai/pytorch_model.bin"
-
-    # if gpu_id is not None:
-    #     command += f" --gpu {gpu_id}"
-    #
-    # os.system(command)
 
 def plan_regression():
 
@@ -89,20 +53,15 @@ def plan_regression():
 
         if augmentation:
 
-            # timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            # dirid = f"_{timestamp}_{augmentation}_threshold_{threshold}_nli1_{nli1}_nli2_{nli2}_nli_{nli}"
             dir_augmentation = f"{scenario}_aug_{augmentation}_threshold_{threshold}_nli1_{nli1}_nli2_{nli2}_nli_{nli}"
-            # print("dirid: " , dir_augmentation)
             scenario_out_dir = os.path.join(outdir, "comet", f"{dir_augmentation}")
 
         if training:
             dir_augmentation = ARGS.dir_augmentation
             scenario_out_dir = os.path.join(outdir, "comet", f"{dir_augmentation}_trainingaugmentation")
-            # scenario_out_dir = os.path.join(outdir, "comet", f"{scenario}{dirid}")
-            # scenario_out_dir = os.path.join(outdir, "comet",scenario)
 
 
-        # regression_task(scenario_out_dir, rootdir, dataset_path , gpu_id, augmentation , training , threshold )
+
         regression(rootdir,dataset_path,ARGS.seed,ARGS.pretrained,scenario_out_dir,ARGS.margin,ARGS.num_samples,ARGS.batch_size,ARGS.gpuid,augmentation,training,threshold,dir_augmentation)
 
 

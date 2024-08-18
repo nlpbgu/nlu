@@ -18,22 +18,7 @@ from unli.utils.augmentation_commonsense import Augmentation , BartAugmentation
 from unli.data.storage import KeyValueStore
 import re
 
-# parser = argparse.ArgumentParser(description="")
-# parser.add_argument("--rootdir", type=str, default="", help="root dir of your repository")
-# parser.add_argument("--data", type=str, default="", help="Path to QRels data")
-# parser.add_argument("--pretrained", type=str, default="", help="Pretrained model")
-# parser.add_argument("--out", type=str, default="", help="Output path")
-# parser.add_argument("--margin", type=float, default=0.3, help="")
-# parser.add_argument("--num_samples", type=int, default=1, help="")
-# parser.add_argument("--seed", type=int, default=0xCAFEBABE, help="")
-# parser.add_argument("--batch_size", type=int, default=16, help="")
-# parser.add_argument("--gpuid", type=int, default=0)
-# parser.add_argument("--augmentation", type = str , help="Enable augmentation") # action='store_true'
-# parser.add_argument("--training_augmentation", action='store_true', help="trainig the augmentation you created")
-# parser.add_argument("--threshold", type=str, help="threshold we want to reference")
-#
 
-# ARGS = parser.parse_args()
 def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gpuid,augmentation,training_augmentation,threshold,dir_augmentation):
 
     logging.basicConfig(level=logging.INFO)
@@ -43,11 +28,9 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
     dest_data_dir = os.path.join(data, "augmentation",dir_augmentation)
     augm_mode = None
 
-    pattern = r"nli1_([0-9.]+|None)_nli2_([0-9.]+|None)_nli_([A-Za-z_]+|None)"
     pattern = r"aug_([A-Za-z_]+)_threshold_([0-9.]+)_nli1_([0-9.]+|None)_nli2_([0-9.]+|None)_nli_([A-Za-z_]+|None)"
 
     match = re.search(pattern, dir_augmentation)
-    # nli, nli1, nli2 = match.group(3), match.group(1), match.group(2)
     augmentation_ , threshold , nli1 , nli2 , nli = match.group(1) , match.group(2) , match.group(3) , match.group(4) , match.group(5)
 
 
@@ -88,7 +71,7 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
         ),
         loss_func=torch.nn.BCELoss(),
         mode="regression",
-        augmentation = augm_mode ,  # Augmentation(model_path) if ARGS.augmentation else None
+        augmentation = augm_mode ,
         kv_store = kv_store if augmentation else None,
         data_dir = data ,
         threshold = float(threshold),
@@ -119,7 +102,7 @@ def regression(rootdir,data,seed,pretrained,out,margin,num_samples,batch_size,gp
         model=model,
         optimizer=Adam(params=model.parameters(), lr=0.00001),
         grad_norm=1.0,
-        train_dataset=reader.read(f"{dest_data_dir if training_augmentation  else data}/train"), # dest_data_dir if ARGS.augmentation  else
+        train_dataset=reader.read(f"{dest_data_dir if training_augmentation  else data}/train"),
         validation_dataset=reader.read(f"{dest_data_dir if training_augmentation  else data}/dev"),
         iterator=iterator,
         validation_metric="+pearson",
