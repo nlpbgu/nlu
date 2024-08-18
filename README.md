@@ -14,7 +14,7 @@ Arguments explanation:
 | out_dir - dir to store the learning weights after the training done                                              |
 | augmentation - model to augmentation the unli data                                                               | 
 | threshold - the threshold of the residual you decide to robust the unli                                          |
-| nli  -   Optional. values {CON,NEU,ENT}. nessecary to use with nli1 and nli2 , when you want to augmentation NEU  | 
+| nli  -  Optional. values {CON,NEU,ENT}. nessecary to use with nli1 and nli2 , when you want to augmentation NEU  | 
 | nli1 -  Optional. values [0,1]. UNLI range. Considers all values ​​smaller than it. use to augmentation CON        |
 |          use only nli1 , without nli and nli2                                                                    |
 | nli2 -  Optional. values [0,1]. UNLI range. Considers all values ​​bigger than it. use to augmentation ENT         |
